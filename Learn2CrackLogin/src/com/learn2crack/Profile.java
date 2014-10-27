@@ -2,9 +2,11 @@ package com.learn2crack;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Profile extends Activity  {
 	Button saveProfile;
@@ -32,12 +34,31 @@ public class Profile extends Activity  {
 		Teams = (TextView) findViewById(R.id.teamsDisplay);
 		
 		//some database thing
-		TimeJoined.setText("dateofJoin");
+		TimeJoined.setText(dateofJoin);
 		Games.setText("");
 		Teams.setText("");
-		for(int i = 0; i < RecentGames.length(); i++){
-			
+		for(int i = 0; i < (Integer)RecentGames.length; i++){
+			Games.append(RecentGames[i]);
+			Games.append("\n");
 		}
+		for(int i = 0; i < (Integer)RecentTeams.length; i++){
+			Teams.append(RecentTeams[i]);
+			Teams.append("\n");
+		}
+		
+		saveProfile.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if  ( !inputUsername.getText().toString().equals(""))
+                {
+					//save some stuff to database
+					
+                } else if(inputUsername.getText().toString().equals("")) {
+                	Toast.makeText(getApplicationContext(),
+                            "Username is empty", Toast.LENGTH_SHORT).show();
+                	
+                }
+				
+			}});
 		
 		
 		
