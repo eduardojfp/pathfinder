@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.learn2crack.CreateGameActivity" >
+
+    <!-- Create Game Text 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_create" />
+    -->
+    
+    <!-- Text Field for Game Name -->
+    <EditText
+        android:id="@+id/edit_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/game_name"
+        android:inputType="text" />
+    
+    <!-- Number Field for Number of Tasks -->
+    <EditText
+        android:id="@+id/task_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/task_num"
+        android:inputType="number" />
+    
+    <!-- What time is the event? -->
+    <Button 
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/pick_time" 
+    	android:onClick="showStartTimePickerDialog" />
+    	  
+    <!-- Check Box for Time Limit -->
+    <CheckBox 
+        android:id="@+id/time_limit_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/time_limit_check"
+        android:onClick="showEndTimePickerDialog"/>
+    
+    <!-- Button to Bring User to Task Creation Screen -->
+    <Button
+        android:id="@+id/next_button"
+        android:text="@string/next_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />"
+
+</LinearLayout>

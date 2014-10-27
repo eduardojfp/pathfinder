@@ -2,7 +2,18 @@
 <resources>
 
     <string name="app_name">PathFinder</string>
-    <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="title_activity_display_message">My Message</string>
+    <string name="action_search">Search Games</string>
+    <string name="action_create">Create Game</string>
+    <string name="title_activity_create_game">createGame</string>
+    <string name="game_name">What\'s the name of the game?</string>
+    <string name="task_num">How many tasks are there?</string>
+    <string name="time_limit_check">Is there a time limit?</string>
+    <string name="next_button">Next</string>
+    <string name="pick_time">Pick Start Time</string>
 
 </resources>
