@@ -227,7 +227,7 @@ public class Login extends Activity {
                        /**
                         *If JSON array details are stored in SQlite it launches the User Panel.
                         **/
-                        Intent upanel = new Intent(getApplicationContext(), Main.class);
+                        Intent upanel = new Intent(getApplicationContext(), Profile.class);
                         upanel.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         pDialog.dismiss();
                         startActivity(upanel);
