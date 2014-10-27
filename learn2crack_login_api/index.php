@@ -29,7 +29,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             $response["user"]["fname"] = $user["firstname"];
             $response["user"]["lname"] = $user["lastname"];
             $response["user"]["email"] = $user["email"];
-	    $response["user"]["uname"] = $user["username"];
+      $response["user"]["uname"] = $user["username"];
             $response["user"]["uid"] = $user["unique_id"];
             $response["user"]["created_at"] = $user["created_at"];
             
@@ -52,10 +52,10 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
         $encrypted_password = $hash["encrypted"]; // encrypted password
         $salt = $hash["salt"];
   $subject = "Change Password Notification";
-         $message = "Hello User,\n\nYour Password is sucessfully changed.\n\nRegards,\nLearn2Crack Team.";
-          $from = "contact@learn2crack.com";
+         $message = "\n\nYour Password has been successfully changed.\n\nTeam PathFinder";
+          $from = "support@team-pathfinder.tk";
           $headers = "From:" . $from;
-	if ($db->isUserExisted($email)) {
+  if ($db->isUserExisted($email)) {
 
  $user = $db->forgotPassword($email, $encrypted_password, $salt);
 if ($user) {
@@ -69,14 +69,14 @@ echo json_encode($response);
 }
 
 
-            // user is already existed - error response
+            // user is already exists - error response
            
            
         } 
            else {
 
             $response["error"] = 2;
-            $response["error_msg"] = "User not exist";
+            $response["error_msg"] = "User does not exist";
              echo json_encode($response);
 
 }
@@ -91,10 +91,10 @@ $hash = $db->hashSSHA($randomcode);
         $encrypted_password = $hash["encrypted"]; // encrypted password
         $salt = $hash["salt"];
   $subject = "Password Recovery";
-         $message = "Hello User,\n\nYour Password is sucessfully changed. Your new Password is $randomcode . Login with your new Password and change it in the User Panel.\n\nRegards,\nLearn2Crack Team.";
-          $from = "contact@learn2crack.com";
+         $message = "Your Password has been successfully changed. Your new Password is $randomcode. Be sure to login with your new Password and change it.\n\nTeam PathFinder.";
+          $from = "support@team-pathfinder.tk";
           $headers = "From:" . $from;
-	if ($db->isUserExisted($forgotpassword)) {
+  if ($db->isUserExisted($forgotpassword)) {
 
  $user = $db->forgotPassword($forgotpassword, $encrypted_password, $salt);
 if ($user) {
@@ -108,14 +108,14 @@ echo json_encode($response);
 }
 
 
-            // user is already existed - error response
+            // user does not exist - error response
            
            
         } 
            else {
 
             $response["error"] = 2;
-            $response["error_msg"] = "User not exist";
+            $response["error_msg"] = "User does not exist";
              echo json_encode($response);
 
 }
@@ -124,23 +124,23 @@ echo json_encode($response);
 else if ($tag == 'register') {
         // Request type is Register new user
         $fname = $_POST['fname'];
-		$lname = $_POST['lname'];
+    $lname = $_POST['lname'];
         $email = $_POST['email'];
-		$uname = $_POST['uname'];
+    $uname = $_POST['uname'];
         $password = $_POST['password'];
 
 
         
           $subject = "Registration";
-         $message = "Hello $fname,\n\nYou have sucessfully registered to our service.\n\nRegards,\nAdmin.";
-          $from = "contact@learn2crack.com";
+         $message = "Hello $fname,\n\nYou have successfully registered to PathFinder.\n\nEnjoy!\nTeam PathFinder.";
+          $from = "support@team-pathfinder.com";
           $headers = "From:" . $from;
 
         // check if user is already existed
         if ($db->isUserExisted($email)) {
             // user is already existed - error response
             $response["error"] = 2;
-            $response["error_msg"] = "User already existed";
+            $response["error_msg"] = "User already exists";
             echo json_encode($response);
         } 
            else if(!$db->validEmail($email)){
@@ -157,7 +157,7 @@ else {
             $response["user"]["fname"] = $user["firstname"];
             $response["user"]["lname"] = $user["lastname"];
             $response["user"]["email"] = $user["email"];
-	    $response["user"]["uname"] = $user["username"];
+      $response["user"]["uname"] = $user["username"];
             $response["user"]["uid"] = $user["unique_id"];
             $response["user"]["created_at"] = $user["created_at"];
                mail($email,$subject,$message,$headers);
@@ -176,6 +176,6 @@ else {
         echo json_encode($response);
     }
 } else {
-    echo "Learn2Crack Login API";
+    echo "Login API";
 }
 ?>

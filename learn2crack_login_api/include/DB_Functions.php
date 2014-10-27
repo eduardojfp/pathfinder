@@ -40,8 +40,8 @@ public function random_string()
 
 
 public function forgotPassword($forgotpassword, $newpassword, $salt){
-	$result = mysql_query("UPDATE `users` SET `encrypted_password` = '$newpassword',`salt` = '$salt' 
-						  WHERE `email` = '$forgotpassword'");
+  $result = mysql_query("UPDATE `users` SET `encrypted_password` = '$newpassword',`salt` = '$salt' 
+              WHERE `email` = '$forgotpassword'");
 
 if ($result) {
  
@@ -53,6 +53,15 @@ else
 return false;
 }
 
+}
+//added
+public function getUserProfile($uid){
+$result = mysql_query("SELECT username, created_at, About, contact FROM users WHERE `uid` = '$uid'") or die(mysql_error());
+
+if ($no_of_rows > 0) {
+return $result;
+}
+else return false;
 }
 /**
      * Adding new user to mysql database
