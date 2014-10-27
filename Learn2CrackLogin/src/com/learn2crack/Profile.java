@@ -52,6 +52,9 @@ public class Profile extends Activity  {
 	        case R.id.action_settings:
 	            //openSettings();
 	            return true;
+	        case R.id.action_profile:
+	            //openProfile();
+	            return true;
 	        default:
 	        	return super.onOptionsItemSelected(item);
         }

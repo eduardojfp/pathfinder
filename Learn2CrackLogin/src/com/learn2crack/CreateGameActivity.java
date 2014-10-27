@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.app.DialogFragment;
 import java.util.Calendar;
 import android.app.Dialog;
+import android.content.Intent;
 import android.widget.TimePicker;
 import android.text.format.DateFormat;
 
@@ -48,21 +50,48 @@ public class CreateGameActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		return true;
-	}
-
-	@Override
+        /* Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+        */
+    	// Inflate the menu items for use in the action bar
+    	MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+        
+    }
+	
+	
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        switch(item.getItemId()) {
+	        case R.id.action_search:
+	            openSearch();
+	            return true;
+	        case R.id.action_create:
+	        	//createGame();
+	        	return true;
+	        case R.id.action_settings:
+	            //openSettings();
+	            return true;
+	        case R.id.action_profile:
+	            openProfile();
+	            return true;
+	        default:
+	        	return super.onOptionsItemSelected(item);
+        }
+    }
+	
+	public void openSearch() {
+    	Intent intent = new Intent(this, MainActivity.class);
+    	startActivity(intent);
+    }
+	public void openProfile() {
+    	Intent intent = new Intent(this, Profile.class);
+    	startActivity(intent);
+    }
 	
 	public void onCheckBoxClicked(View view) {
 		

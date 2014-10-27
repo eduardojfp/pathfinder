@@ -59,6 +59,9 @@ public class MainActivity extends Activity {
 	        case R.id.action_settings:
 	            //openSettings();
 	            return true;
+	        case R.id.action_profile:
+	            openProfile();
+	            return true;
 	        default:
 	        	return super.onOptionsItemSelected(item);
         }
@@ -92,6 +95,10 @@ public class MainActivity extends Activity {
     
     public void createGame() {
     	Intent intent = new Intent(this, CreateGameActivity.class);
+    	startActivity(intent);
+    }
+    public void openProfile() {
+    	Intent intent = new Intent(this, Profile.class);
     	startActivity(intent);
     }
 }

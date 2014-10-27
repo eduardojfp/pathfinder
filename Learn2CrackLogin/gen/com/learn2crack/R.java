@@ -30,6 +30,7 @@ public final class R {
         public static final int about=0x7f08001e;
         public static final int aboutText=0x7f08001f;
         public static final int action_create=0x7f080035;
+        public static final int action_profile=0x7f080036;
         public static final int action_search=0x7f080034;
         public static final int action_settings=0x7f080033;
         public static final int alert=0x7f080018;
@@ -103,6 +104,7 @@ public final class R {
     }
     public static final class string {
         public static final int action_create=0x7f050007;
+        public static final int action_profile=0x7f05000e;
         public static final int action_search=0x7f050006;
         public static final int action_settings=0x7f050002;
         public static final int app_name=0x7f050000;

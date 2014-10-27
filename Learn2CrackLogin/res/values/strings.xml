@@ -15,5 +15,6 @@
     <string name="time_limit_check">Is there a time limit?</string>
     <string name="next_button">Next</string>
     <string name="pick_time">Pick Start Time</string>
+    <string name="action_profile">View Profile</string>
 
 </resources>
