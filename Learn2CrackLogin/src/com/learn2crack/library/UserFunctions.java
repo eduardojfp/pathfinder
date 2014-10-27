@@ -19,10 +19,10 @@ public class UserFunctions {
     private JSONParser jsonParser;
 
     //URL of the PHP API
-    private static String loginURL = "http://10.0.2.2/learn2crack_login_api/";
-    private static String registerURL = "http://10.0.2.2/learn2crack_login_api/";
-    private static String forpassURL = "http://10.0.2.2/learn2crack_login_api/";
-    private static String chgpassURL = "http://10.0.2.2/learn2crack_login_api/";
+    private static String loginURL = "http://team-pathfinder.tk/a4794025_DB/";
+    private static String registerURL = "http://team-pathfinder.tk/a4794025_DB/";
+    private static String forpassURL = "http://team-pathfinder.tk/a4794025_DB/";
+    private static String chgpassURL = "http://team-pathfinder.tk/a4794025_DB/";
 
 
     private static String login_tag = "login";
@@ -31,7 +31,7 @@ public class UserFunctions {
     private static String chgpass_tag = "chgpass";
 
 
-    // constructor
+    // constructor7y
     public UserFunctions(){
         jsonParser = new JSONParser();
     }

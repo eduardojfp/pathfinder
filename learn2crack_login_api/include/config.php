@@ -3,8 +3,8 @@
 /**
  * Database config variables
  */
-define("DB_HOST", "127.0.0.1");
-define("DB_USER", "root");
-define("DB_PASSWORD", "root");
-define("DB_DATABASE", "learn2crack_login_api");
+define("DB_HOST", "mysql2.000webhost.com");
+define("DB_USER", "a4794025_pfinder");
+define("DB_PASSWORD", "pass4path");
+define("DB_DATABASE", "a4794025_DB");
 ?>
