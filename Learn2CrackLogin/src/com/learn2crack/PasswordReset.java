@@ -173,7 +173,7 @@ private static String KEY_ERROR = "error";
                     @Override
                     protected void onPostExecute(JSONObject json) {
                   /**
-                   * Checks if the Password Change Process is sucesss
+                   * Checks if the Password Change Process is success
                    **/
                         try {
                             if (json.getString(KEY_SUCCESS) != null) {
@@ -184,7 +184,7 @@ private static String KEY_ERROR = "error";
 
                                 if(Integer.parseInt(res) == 1){
                                    pDialog.dismiss();
-                                    alert.setText("A recovery email is sent to you, see it for more details.");
+                                    alert.setText("A recovery email has been sent to you.");
 
 
 
@@ -195,7 +195,7 @@ private static String KEY_ERROR = "error";
                                 }
                                 else {
                                     pDialog.dismiss();
-                                    alert.setText("Error occured in changing Password");
+                                    alert.setText("Error occured while changing Password");
                                 }
 
 
