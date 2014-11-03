@@ -30,6 +30,7 @@ public class UserFunctions {
     private static String forpass_tag = "forpass";
     private static String chgpass_tag = "chgpass";
     private static String getUserData_tag = "getUserData";
+    private static String setUserData_tag = "setUserData";
 
 
     // constructor7y
@@ -112,6 +113,17 @@ public class UserFunctions {
     	List<NameValuePair> params = new ArrayList<NameValuePair>();
     	params.add(new BasicNameValuePair("tag", getUserData_tag));
     	params.add(new BasicNameValuePair("uid", uid));
+        JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
+    	return json;
+    }
+public JSONObject setUserData(String uid, String username, String about, String contact){
+    	
+    	List<NameValuePair> params = new ArrayList<NameValuePair>();
+    	params.add(new BasicNameValuePair("tag", setUserData_tag));
+    	params.add(new BasicNameValuePair("uid", uid));
+    	params.add(new BasicNameValuePair("username", username));
+    	params.add(new BasicNameValuePair("about", about));
+    	params.add(new BasicNameValuePair("contact", contact));
         JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
     	return json;
     }

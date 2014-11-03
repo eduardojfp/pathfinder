@@ -3,11 +3,9 @@ package com.learn2crack;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.learn2crack.library.DatabaseHandler;
 import com.learn2crack.library.UserFunctions;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,7 +30,6 @@ public class Profile extends Activity  {
 	TextView Teams;
 	
     private static String KEY_SUCCESS = "success";
-    private static String KEY_UID = "uid";
     private static String KEY_USERNAME = "uname";
     private static String KEY_CREATED_AT = "created_at";
     private static String KEY_ABOUT = "about";
@@ -136,6 +133,8 @@ public class Profile extends Activity  {
 				if  ( !inputUsername.getText().toString().equals(""))
                 {
 					//save some stuff to database
+
+					new SetUserData().execute();
 					
                 } else if(inputUsername.getText().toString().equals("")) {
                 	Toast.makeText(getApplicationContext(),
@@ -149,12 +148,12 @@ public class Profile extends Activity  {
 		
 	}
 	private class GetUserData extends AsyncTask<String, String, JSONObject> {
-		private ProgressDialog pDialog;
+		
 		
 		SharedPreferences prefs = Profile.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
   	    String saveduid = "com.example.app.uid";
-  	    //String uid = prefs.getString(saveduid, "13");
-  	    String uid = "13";
+  	    String uid = prefs.getString(saveduid, "none");
+  	    //String uid = "13";
 
         @Override
         protected void onPreExecute() {
@@ -184,7 +183,7 @@ public class Profile extends Activity  {
         			if(json_user.getString(KEY_CONTACT) != "null"){
         				inputContact.setText(json_user.getString(KEY_CONTACT));
         			}
-        			if(uid == "1"){
+        			if(uid == "none"){
         				inputUsername.setText("Saved Did not work");
         			}
         			
@@ -200,8 +199,41 @@ public class Profile extends Activity  {
 		
 		
 	}
-	
-	
-	
-	
+	private class SetUserData extends AsyncTask<String, String, JSONObject> {
+		String username = inputUsername.getText().toString();
+		String about = inputAbout.getText().toString();
+		String contact = inputContact.getText().toString();
+		
+		SharedPreferences prefs = Profile.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
+  	    String saveduid = "com.example.app.uid";
+  	    String uid = prefs.getString(saveduid, "none");
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... args) {
+
+        	UserFunctions userFunction = new UserFunctions();
+            JSONObject json = userFunction.setUserData(uid, username, about, contact);
+            return json;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject json) {
+        	try {
+                if (json.getString(KEY_SUCCESS) != null) {
+                	Toast.makeText(getApplicationContext(),"Saved", Toast.LENGTH_SHORT).show();
+                }else{
+                	Toast.makeText(getApplicationContext(),"Save Unsucessful", Toast.LENGTH_SHORT).show();
+                }
+        	}catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+		
+	}
+		
 }
