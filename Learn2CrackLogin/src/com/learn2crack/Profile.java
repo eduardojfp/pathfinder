@@ -1,7 +1,17 @@
 package com.learn2crack;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.learn2crack.library.DatabaseHandler;
+import com.learn2crack.library.UserFunctions;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,8 +31,14 @@ public class Profile extends Activity  {
 	TextView Games;
 	TextView Teams;
 	
+    private static String KEY_SUCCESS = "success";
+    private static String KEY_UID = "uid";
+    private static String KEY_USERNAME = "uname";
+    private static String KEY_CREATED_AT = "created_at";
+    private static String KEY_ABOUT = "about";
+    private static String KEY_CONTACT = "contact";
+	
 	//some placeholder values
-	String dateofJoin = "10/16/2014";
 	String[] RecentGames = {"Game 1", "Game 2", "Game 3"}; 
 	String[] RecentTeams = {"Team 1", "Team 2", "Team 3"}; 
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -71,6 +87,13 @@ public class Profile extends Activity  {
 
 
 	public void onCreate(Bundle savedInstanceState) {
+		
+       // json.getString(KEY_FIRSTNAME);
+        //json.getString(KEY_LASTNAME);
+        //json.getString(KEY_EMAIL);
+        //json.getString(KEY_USERNAME);
+        //json.getString(KEY_UID);
+      //  json.getString(KEY_CREATED_AT);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profile);
 		inputUsername = (EditText) findViewById(R.id.userName);
@@ -82,7 +105,6 @@ public class Profile extends Activity  {
 		Teams = (TextView) findViewById(R.id.teamsDisplay);
 		
 		//some database thing
-		TimeJoined.setText(dateofJoin);
 		Games.setText("");
 		Teams.setText("");
 		for(int i = 0; i < (Integer)RecentGames.length; i++){
@@ -93,7 +115,22 @@ public class Profile extends Activity  {
 			Teams.append(RecentTeams[i]);
 			Teams.append("\n");
 		}
+		new GetUserData().execute();
 		
+		/*String uid = "13";
+		UserFunctions userFunction = new UserFunctions();
+        JSONObject json = userFunction.getUserData(uid);
+        
+        try {
+			JSONObject json_user = json.getJSONObject("user");
+			inputUsername.setText(json_user.getString(KEY_USERNAME));
+			TimeJoined.setText(json_user.getString(KEY_CREATED_AT));
+			inputAbout.setText(json_user.getString(KEY_ABOUT));
+			inputContact.setText(json_user.getString(KEY_CONTACT));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 		saveProfile.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if  ( !inputUsername.getText().toString().equals(""))
@@ -111,6 +148,59 @@ public class Profile extends Activity  {
 		
 		
 	}
+	private class GetUserData extends AsyncTask<String, String, JSONObject> {
+		private ProgressDialog pDialog;
+		
+		SharedPreferences prefs = Profile.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
+  	    String saveduid = "com.example.app.uid";
+  	    //String uid = prefs.getString(saveduid, "13");
+  	    String uid = "13";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... args) {
+
+        	UserFunctions userFunction = new UserFunctions();
+            JSONObject json = userFunction.getUserData(uid);
+            return json;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject json) {
+            try {
+               if (json.getString(KEY_SUCCESS) != null) {
+
+
+                    JSONObject json_user = json.getJSONObject("user");
+        			inputUsername.setText(json_user.getString(KEY_USERNAME));
+        			TimeJoined.setText(json_user.getString(KEY_CREATED_AT));
+        			if(json_user.getString(KEY_ABOUT) != "null"){
+        				inputAbout.setText(json_user.getString(KEY_ABOUT));
+        			}
+        			if(json_user.getString(KEY_CONTACT) != "null"){
+        				inputContact.setText(json_user.getString(KEY_CONTACT));
+        			}
+        			if(uid == "1"){
+        				inputUsername.setText("Saved Did not work");
+        			}
+        			
+                    }
+               else{
+
+                    }
+                
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+       }
+		
+		
+	}
+	
 	
 	
 	

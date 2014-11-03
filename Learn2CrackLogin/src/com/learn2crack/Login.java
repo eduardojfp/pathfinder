@@ -8,6 +8,7 @@ package com.learn2crack;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -31,7 +32,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Login extends Activity {
-
     Button btnLogin;
     Button Btnregister;
     Button passreset;
@@ -211,13 +211,21 @@ public class Login extends Activity {
             try {
                if (json.getString(KEY_SUCCESS) != null) {
 
-                    String res = json.getString(KEY_SUCCESS);
+            	   
+            	   String res = json.getString(KEY_SUCCESS);
 
                     if(Integer.parseInt(res) == 1){
                         pDialog.setMessage("Loading User Space");
                         pDialog.setTitle("Getting Data");
                         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                         JSONObject json_user = json.getJSONObject("user");
+                        
+                        
+                       SharedPreferences prefs = Login.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
+                 	   String saveduid = "com.example.app.uid";
+                 	   SharedPreferences.Editor editor = prefs.edit();
+                 	   String userid = json_user.getString(KEY_UID);
+                 	   editor.putString(saveduid, userid);
                         /**
                          * Clear all previous data in SQlite database.
                          **/
