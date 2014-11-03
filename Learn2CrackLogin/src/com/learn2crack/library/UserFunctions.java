@@ -73,6 +73,12 @@ public class UserFunctions {
      * Function to reset the password
      **/
 
+    /*
+     * 
+     * called from PasswordReset
+     * creates a list of params for the JSONObject
+     * returns the json object as a url, and list of params
+     */
     public JSONObject forPass(String forgotpassword){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("tag", forpass_tag));

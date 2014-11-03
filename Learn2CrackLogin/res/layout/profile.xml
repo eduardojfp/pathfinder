@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/android"
-    android:orientation="vertical" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+    <LinearLayout android:id="@+id/menu_ll"
+        android:orientation="vertical" 
+        android:layout_width="fill_parent" android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/Name"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:text="Name"
         android:textColor="#000000"
         android:textSize="20dp" />
@@ -19,26 +18,18 @@
     	android:layout_width="fill_parent"
     	android:layout_height="1dp"
     	android:background="#FF0000FF" 
-    	android:layout_below="@+id/Name"
     />
     
 	<EditText
 	    android:id="@+id/userName"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@+id/Name"
-	    android:layout_centerVertical="true"
 	    android:inputType="text" />
 
 	<TextView
 	    android:id="@+id/timeJoined"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@+id/userName"
         android:textColor="#000000"
         android:textSize="20dp" 
 	    android:text="Time Joined" />
@@ -53,9 +44,6 @@
 	    android:id="@+id/time"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@+id/timeJoined"
 	    android:text="Fill for space"
 	    android:textColor="#FFFFFF"
 	    android:textSize="20dp" />
@@ -64,9 +52,6 @@
 	    android:id="@+id/about"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@+id/time"
         android:textColor="#000000"
         android:textSize="20dp" 
 	    android:text="About" />
@@ -74,25 +59,17 @@
    		android:layout_width="fill_parent"
     	android:layout_height="1dp"
     	android:background="#FF0000FF" 
-    	android:layout_below="@+id/about"
     />
 	<EditText
 	    android:id="@+id/aboutText"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@+id/about"
-	    android:layout_centerVertical="true"
 	    android:inputType="text" />
 	
 	<TextView
 	    android:id="@+id/contact"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@+id/aboutText"
         android:textColor="#000000"
         android:textSize="20dp" 
 	    android:text="Contact" />
@@ -100,25 +77,17 @@
    		android:layout_width="fill_parent"
     	android:layout_height="1dp"
     	android:background="#FF0000FF" 
-    	android:layout_below="@+id/contact"
     />
 	
 	<EditText
 	    android:id="@+id/contactText"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@+id/contact"
-	    android:layout_centerVertical="true"
 	    android:inputType="text" />
 	<TextView
 	    android:id="@+id/recentGames"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@+id/contactText"
         android:textColor="#000000"
         android:textSize="20dp" 
 	    android:text="Recent Games" />
@@ -126,15 +95,11 @@
    		android:layout_width="fill_parent"
     	android:layout_height="1dp"
     	android:background="#FF0000FF" 
-    	android:layout_below="@+id/recentGames"
     />
 	<TextView
 	    android:id="@+id/recentGamesDisplayed"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentRight="true"
-    	android:layout_below="@+id/recentGames"
         android:textColor="#FFFFFF"
         android:textSize="20dp"
 	    android:text="No games played"  />
@@ -143,9 +108,6 @@
 	    android:id="@+id/teams"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentRight="true"
-    	android:layout_below="@+id/recentGamesDisplayed"
         android:textColor="#000000"
         android:textSize="20dp"
 	    android:text="Teams"  />
@@ -153,15 +115,11 @@
    		android:layout_width="fill_parent"
     	android:layout_height="1dp"
     	android:background="#FF0000FF" 
-    	android:layout_below="@+id/teams"
     />
 	<TextView
 	    android:id="@+id/teamsDisplay"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentRight="true"
-    	android:layout_below="@+id/teams"
         android:textColor="#FFFFFF"
         android:textSize="20dp"
 	    android:text="Insert Teams Here"  />
@@ -170,11 +128,10 @@
         android:id="@+id/Save"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/teamsDisplay"
         android:text="Save"
         android:textColor="#000000"
         android:textSize="13dp" />
     
-</RelativeLayout>
+</LinearLayout>
+
+</ScrollView>
