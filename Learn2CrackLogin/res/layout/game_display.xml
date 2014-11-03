@@ -5,20 +5,34 @@
     android:orientation="vertical" >
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/gameName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:text="Game Name" >
+        android:hint="No Games" >
 
         <requestFocus />
     </EditText>
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/startTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:text="Start Time: &quot; &quot;,  End Time:  &quot; &quot;" />
+        android:hint="Start Time" />
+
+    <EditText
+        android:id="@+id/endTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="End Time" />
+
+    <EditText
+        android:id="@+id/tasks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="No tasks" />
 
 </LinearLayout>
