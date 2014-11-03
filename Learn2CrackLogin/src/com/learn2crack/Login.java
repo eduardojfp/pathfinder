@@ -48,6 +48,11 @@ public class Login extends Activity {
     private static String KEY_LASTNAME = "lname";
     private static String KEY_EMAIL = "email";
     private static String KEY_CREATED_AT = "created_at";
+    
+    // disable back button
+    @Override
+    public void onBackPressed() {
+    }
 
 
     @Override
