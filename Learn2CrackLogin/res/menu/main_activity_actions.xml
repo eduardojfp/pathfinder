@@ -18,5 +18,6 @@
         android:title="@string/action_settings"
         android:showAsAction="never" />
     <item android:id="@+id/action_profile" android:title="@string/action_profile"></item>
+    <item android:id="@+id/action_logout" android:title="@string/action_logout" android:showAsAction="never"></item>
 
 </menu>

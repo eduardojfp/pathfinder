@@ -16,5 +16,6 @@
     <string name="next_button">Next</string>
     <string name="pick_time">Pick Start Time</string>
     <string name="action_profile">View Profile</string>
+    <string name="action_logout">Logout</string>
 
 </resources>

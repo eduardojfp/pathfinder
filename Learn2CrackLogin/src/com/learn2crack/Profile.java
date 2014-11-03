@@ -68,6 +68,9 @@ public class Profile extends Activity  {
 	        case R.id.action_profile:
 	            //openProfile();
 	            return true;
+	        case R.id.action_logout:
+	        	openLogout();
+	        	return true;
 	        default:
 	        	return super.onOptionsItemSelected(item);
         }
@@ -82,6 +85,10 @@ public class Profile extends Activity  {
     	startActivity(intent);
     }
 
+	public void openLogout() {
+		Intent intent = new Intent(this, Login.class);
+		startActivity(intent);
+	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		

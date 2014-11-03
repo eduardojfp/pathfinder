@@ -30,6 +30,7 @@ public final class R {
         public static final int about=0x7f08001f;
         public static final int aboutText=0x7f080020;
         public static final int action_create=0x7f080036;
+        public static final int action_logout=0x7f080038;
         public static final int action_profile=0x7f080037;
         public static final int action_search=0x7f080035;
         public static final int action_settings=0x7f080034;
@@ -105,6 +106,7 @@ public final class R {
     }
     public static final class string {
         public static final int action_create=0x7f050007;
+        public static final int action_logout=0x7f05000f;
         public static final int action_profile=0x7f05000e;
         public static final int action_search=0x7f050006;
         public static final int action_settings=0x7f050002;
