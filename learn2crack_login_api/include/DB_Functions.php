@@ -55,13 +55,40 @@ return false;
 
 }
 //added
-public function getUserProfile($uid){
-$result = mysql_query("SELECT username, created_at, About, contact FROM users WHERE `uid` = '$uid'") or die(mysql_error());
+public function getUserData($uid){
+  $result = mysql_query("SELECT username, created_at, About, contact FROM users WHERE unique_id = '$uid'") or die(mysql_error());
 
-if ($no_of_rows > 0) {
-return $result;
+  $no_of_rows = mysql_num_rows($result);
+  if ($no_of_rows > 0) {
+    $result = mysql_fetch_array($result);   
+     return $result;
+  }
+  else {
+    return false;
+  }
 }
-else return false;
+public function setUserData($uniqueid, $username, $about, $contact){
+  $result = mysql_query("UPDATE users SET username = '$username', About = '$about', contact ='$contact' WHERE unique_id = '$uniqueid'");
+  
+  if ($result) {
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+public function getGameData($gid){
+  $result=mysql_query("SELECT gameName, startTime, endTime, Tasks FROM games WHERE unique_id='$uid'") or die(mysql_error());
+
+  $no_of_rows = mysql_num_rows($result);
+  if ($no_of_rows > 0) {
+    $result = mysql_fetch_array($result);
+    return $result;
+  }
+  else {
+  return false;
+}
 }
 /**
      * Adding new user to mysql database

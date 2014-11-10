@@ -42,6 +42,51 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             echo json_encode($response);
         }
     } 
+
+  else if ($tag == 'getUserData'){
+     $uid = $_POST['uid'];
+     $userdata = $db->getUserData($uid);
+     if($userdata != false){
+       $response["success"] = 1;
+       $response["user"]["uname"] = $userdata["username"];
+       $response["user"]["created_at"] = $userdata["created_at"];
+       $response["user"]["about"] = $userdata["About"];
+       $response["user"]["contact"] = $userdata["contact"]; 
+       
+       echo json_encode($response);     
+    }
+
+  else if ($tag =='getGameData')
+    $gid = $_POST['uid'];
+    $gamedata = $db->getGameData($uid);
+    if($gamedata != false){
+      $response["success"]=1;
+      $response["game"]["gName"]=$gamedata["gameName"];
+      $response["game"]["sTime"]=$gamedata["gameName"];
+      $response["game"]["eTime"]=$gamedata["gameName"];
+    }
+    else{
+      $response["error"] = 1;
+      $response["error_msg"] = "No uid found";
+      echo json_encode($response);
+    }
+
+  }
+  else if ($tag == 'setUserData'){
+    $uniqueid = $_POST['uid'];
+    $username = $_POST['username'];
+    $about = $_POST['about'];
+    $contact = $_POST['contact'];
+    $userdata = $db->setUserData($uniqueid, $username, $about, $contact);
+    if($userdata != false){
+      $response["success"] = 1;
+      echo json_encode($response);   
+    }else{
+  
+      $response["error"] = 1;
+      echo json_encode($response);    
+    }
+  }
   else if ($tag == 'chgpass'){
   $email = $_POST['email'];
 
