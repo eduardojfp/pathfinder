@@ -49,7 +49,7 @@ public class Login extends Activity {
     private static String KEY_EMAIL = "email";
     private static String KEY_CREATED_AT = "created_at";
     
-    // disable back button
+     //disable back button
     @Override
     public void onBackPressed() {
     }
@@ -231,6 +231,7 @@ public class Login extends Activity {
                  	   SharedPreferences.Editor editor = prefs.edit();
                  	   String userid = json_user.getString(KEY_UID);
                  	   editor.putString(saveduid, userid);
+                 	   editor.commit();
                         /**
                          * Clear all previous data in SQlite database.
                          **/
