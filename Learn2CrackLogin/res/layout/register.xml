@@ -151,7 +151,6 @@
         android:layout_below="@+id/pword"
         android:ems="10"
         android:hint="Zip Code"
-        android:inputType="text"
         android:textSize="15sp" >
 
         <requestFocus />

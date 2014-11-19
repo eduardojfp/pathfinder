@@ -103,8 +103,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             user.put("lname", cursor.getString(2));
             user.put("email", cursor.getString(3));
             user.put("uname", cursor.getString(4));
-            user.put("uid", cursor.getString(5));
-            user.put("created_at", cursor.getString(6));
+            user.put("uzip", cursor.getString(5));
+            user.put("uid", cursor.getString(6));
+            user.put("created_at", cursor.getString(7));
         }
         cursor.close();
         db.close();
