@@ -1,6 +1,8 @@
 package com.learn2crack;
 
 /**
+ * Edited By Megan Matiz
+ * 
  * Author :Raj Amal
  * Email  :raj.amalw@learn2crack.com
  * Website:www.learn2crack.com
@@ -43,6 +45,7 @@ public class Register extends Activity {
     private static String KEY_FIRSTNAME = "fname";
     private static String KEY_LASTNAME = "lname";
     private static String KEY_USERNAME = "uname";
+    private static String KEY_ZIPCODE = "uzip";
     private static String KEY_EMAIL = "email";
     private static String KEY_CREATED_AT = "created_at";
     private static String KEY_ERROR = "error";
@@ -54,6 +57,7 @@ public class Register extends Activity {
     EditText inputFirstName;
     EditText inputLastName;
     EditText inputUsername;
+    EditText inputZipcode;
     EditText inputEmail;
     EditText inputPassword;
     Button btnRegister;
@@ -74,6 +78,7 @@ public class Register extends Activity {
         inputFirstName = (EditText) findViewById(R.id.fname);
         inputLastName = (EditText) findViewById(R.id.lname);
         inputUsername = (EditText) findViewById(R.id.uname);
+        inputZipcode = (EditText) findViewById(R.id.uzip);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.pword);
         btnRegister = (Button) findViewById(R.id.register);
@@ -198,7 +203,7 @@ public class Register extends Activity {
  **/
         private ProgressDialog pDialog;
 
-        String email,password,fname,lname,uname;
+        String email,password,fname,lname,uname,uzip;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -208,6 +213,7 @@ public class Register extends Activity {
                lname = inputLastName.getText().toString();
                 email = inputEmail.getText().toString();
                 uname= inputUsername.getText().toString();
+                uzip = inputZipcode.getText().toString();
                 password = inputPassword.getText().toString();
             pDialog = new ProgressDialog(Register.this);
             pDialog.setTitle("Contacting Servers");
@@ -222,7 +228,7 @@ public class Register extends Activity {
 
 
         UserFunctions userFunction = new UserFunctions();
-        JSONObject json = userFunction.registerUser(fname, lname, email, uname, password);
+        JSONObject json = userFunction.registerUser(fname, lname, email, uname, uzip, password);
 
             return json;
 
@@ -256,7 +262,7 @@ public class Register extends Activity {
 
                             UserFunctions logout = new UserFunctions();
                             logout.logoutUser(getApplicationContext());
-                            db.addUser(json_user.getString(KEY_FIRSTNAME),json_user.getString(KEY_LASTNAME),json_user.getString(KEY_EMAIL),json_user.getString(KEY_USERNAME),json_user.getString(KEY_UID),json_user.getString(KEY_CREATED_AT));
+                            db.addUser(json_user.getString(KEY_FIRSTNAME),json_user.getString(KEY_LASTNAME),json_user.getString(KEY_EMAIL),json_user.getString(KEY_USERNAME),json_user.getString(KEY_ZIPCODE),json_user.getString(KEY_UID),json_user.getString(KEY_CREATED_AT));
                             /**
                              * Stores registered data in SQlite Database
                              * Launch Registered screen

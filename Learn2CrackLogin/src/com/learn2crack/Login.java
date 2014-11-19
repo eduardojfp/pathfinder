@@ -44,6 +44,7 @@ public class Login extends Activity {
     private static String KEY_SUCCESS = "success";
     private static String KEY_UID = "uid";
     private static String KEY_USERNAME = "uname";
+    private static String KEY_ZIPCODE = "uzip";
     private static String KEY_FIRSTNAME = "fname";
     private static String KEY_LASTNAME = "lname";
     private static String KEY_EMAIL = "email";
@@ -237,7 +238,7 @@ public class Login extends Activity {
                          **/
                         UserFunctions logout = new UserFunctions();
                         logout.logoutUser(getApplicationContext());
-                        db.addUser(json_user.getString(KEY_FIRSTNAME),json_user.getString(KEY_LASTNAME),json_user.getString(KEY_EMAIL),json_user.getString(KEY_USERNAME),json_user.getString(KEY_UID),json_user.getString(KEY_CREATED_AT));
+                        db.addUser(json_user.getString(KEY_FIRSTNAME),json_user.getString(KEY_LASTNAME),json_user.getString(KEY_EMAIL),json_user.getString(KEY_USERNAME),json_user.getString(KEY_ZIPCODE),json_user.getString(KEY_UID),json_user.getString(KEY_CREATED_AT));
                        /**
                         *If JSON array details are stored in SQlite it launches the User Panel.
                         **/

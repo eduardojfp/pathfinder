@@ -33,6 +33,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_LASTNAME = "lname";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_USERNAME = "uname";
+    private static final String KEY_ZIPCODE = "uzip";
     private static final String KEY_UID = "uid";
     private static final String KEY_CREATED_AT = "created_at";
 
@@ -49,6 +50,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_LASTNAME + " TEXT,"
                 + KEY_EMAIL + " TEXT UNIQUE,"
                 + KEY_USERNAME + " TEXT,"
+                + KEY_ZIPCODE + " Text,"
                 + KEY_UID + " TEXT,"
                 + KEY_CREATED_AT + " TEXT" + ")";
         db.execSQL(CREATE_LOGIN_TABLE);
@@ -67,7 +69,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Storing user details in database
      * */
-    public void addUser(String fname, String lname, String email, String uname, String uid, String created_at) {
+    public void addUser(String fname, String lname, String email, String uname, String uzip, String uid, String created_at) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -75,6 +77,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_LASTNAME, lname); // LastName
         values.put(KEY_EMAIL, email); // Email
         values.put(KEY_USERNAME, uname); // UserName
+        values.put(KEY_ZIPCODE, uzip); //zip code
         values.put(KEY_UID, uid); // Email
         values.put(KEY_CREATED_AT, created_at); // Created At
 
