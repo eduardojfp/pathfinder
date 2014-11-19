@@ -67,7 +67,7 @@ public class gameDisplay extends Activity  {
     	startActivity(intent);
     }
 	public void openSearch() {
-    	Intent intent = new Intent(this, MainActivity.class);
+    	Intent intent = new Intent(this, Search_Games.class);
     	startActivity(intent);
     }
 	public void openLogout() {

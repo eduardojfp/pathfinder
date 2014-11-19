@@ -23,6 +23,7 @@ public class UserFunctions {
     private static String registerURL = "http://team-pathfinder.tk/a4794025_DB/";
     private static String forpassURL = "http://team-pathfinder.tk/a4794025_DB/";
     private static String chgpassURL = "http://team-pathfinder.tk/a4794025_DB/";
+    private static String getGameDataURL = "http://team-pathfinder.tk/a4794025_DB/";
 
 
     private static String login_tag = "login";
@@ -31,6 +32,7 @@ public class UserFunctions {
     private static String chgpass_tag = "chgpass";
     private static String getUserData_tag = "getUserData";
     private static String setUserData_tag = "setUserData";
+    private static String getGameData_tag = "getGameData";
 
 
     // constructor7y
@@ -128,7 +130,18 @@ public JSONObject setUserData(String uid, String username, String about, String 
         JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
     	return json;
     }
-        
+    
+
+	/**
+	 * Function to get game data
+	 */
+public JSONObject getGameData(String uzip){
+	List<NameValuePair> params = new ArrayList<NameValuePair>();
+	params.add(new BasicNameValuePair("tag", getGameData_tag));
+	params.add(new BasicNameValuePair("uzip", uzip));
+    JSONObject json = jsonParser.getJSONFromUrl(getGameDataURL,params);
+	return json;
+}
 
 
     /**

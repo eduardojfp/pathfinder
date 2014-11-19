@@ -4,3 +4,7 @@
 *.jar
 *.apk
 *.ap_
+*~
+*.swp
+*.out
+*.lock
