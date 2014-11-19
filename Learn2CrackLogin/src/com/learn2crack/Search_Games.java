@@ -35,7 +35,8 @@ public class Search_Games extends Activity  {
     	// Inflate the menu items for use in the action bar
     	MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_actions, menu);
-        return super.onCreateOptionsMenu(menu);      
+        return super.onCreateOptionsMenu(menu);
+        
     }
 		
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -83,8 +84,18 @@ public class Search_Games extends Activity  {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_games);
 		Games = (TextView) findViewById(R.id.localGames);
+		createGame = (Button) findViewById(R.id.create_game);
 		
 		new GetGameData().execute();
+		
+		
+		createGame.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+					createGame();	
+                }
+				
+		});
+		
 	}
 	private class GetGameData extends AsyncTask<String, String, JSONObject> {
 		

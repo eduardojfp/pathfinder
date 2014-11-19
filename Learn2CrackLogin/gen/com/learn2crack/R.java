@@ -29,11 +29,11 @@ public final class R {
         public static final int Save=0x7f08002c;
         public static final int about=0x7f080024;
         public static final int aboutText=0x7f080025;
-        public static final int action_create=0x7f08003c;
-        public static final int action_logout=0x7f08003e;
-        public static final int action_profile=0x7f08003d;
-        public static final int action_search=0x7f08003b;
-        public static final int action_settings=0x7f08003a;
+        public static final int action_create=0x7f08003d;
+        public static final int action_logout=0x7f08003f;
+        public static final int action_profile=0x7f08003e;
+        public static final int action_search=0x7f08003c;
+        public static final int action_settings=0x7f08003b;
         public static final int alert=0x7f08001d;
         public static final int alertpass=0x7f08000b;
         public static final int bktolog=0x7f08001e;
@@ -43,7 +43,8 @@ public final class R {
         public static final int contact=0x7f080026;
         public static final int contactText=0x7f080027;
         public static final int container=0x7f080000;
-        public static final int createGame=0x7f080039;
+        public static final int create_game=0x7f080039;
+        public static final int editText1=0x7f08003a;
         public static final int edit_message=0x7f08000f;
         public static final int email=0x7f080004;
         public static final int endTime=0x7f080016;
