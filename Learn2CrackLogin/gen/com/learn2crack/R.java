@@ -29,11 +29,11 @@ public final class R {
         public static final int Save=0x7f08002c;
         public static final int about=0x7f080024;
         public static final int aboutText=0x7f080025;
-        public static final int action_create=0x7f08003a;
-        public static final int action_logout=0x7f08003c;
-        public static final int action_profile=0x7f08003b;
-        public static final int action_search=0x7f080039;
-        public static final int action_settings=0x7f080038;
+        public static final int action_create=0x7f08003c;
+        public static final int action_logout=0x7f08003e;
+        public static final int action_profile=0x7f08003d;
+        public static final int action_search=0x7f08003b;
+        public static final int action_settings=0x7f08003a;
         public static final int alert=0x7f08001d;
         public static final int alertpass=0x7f08000b;
         public static final int bktolog=0x7f08001e;
@@ -43,7 +43,7 @@ public final class R {
         public static final int contact=0x7f080026;
         public static final int contactText=0x7f080027;
         public static final int container=0x7f080000;
-        public static final int editText1=0x7f080014;
+        public static final int createGame=0x7f080039;
         public static final int edit_message=0x7f08000f;
         public static final int email=0x7f080004;
         public static final int endTime=0x7f080016;
@@ -51,6 +51,7 @@ public final class R {
         public static final int forpas=0x7f08001c;
         public static final int gameName=0x7f080013;
         public static final int lname=0x7f08001a;
+        public static final int localGames=0x7f080014;
         public static final int login=0x7f080008;
         public static final int loginErrorMsg=0x7f080001;
         public static final int logout=0x7f080019;
@@ -73,6 +74,7 @@ public final class R {
         public static final int teams=0x7f08002a;
         public static final int teamsDisplay=0x7f08002b;
         public static final int textView=0x7f080009;
+        public static final int textView1=0x7f080038;
         public static final int textView11=0x7f080036;
         public static final int textView2=0x7f080003;
         public static final int textView3=0x7f08000a;
@@ -101,6 +103,7 @@ public final class R {
         public static final int profile=0x7f03000a;
         public static final int register=0x7f03000b;
         public static final int registered=0x7f03000c;
+        public static final int search_games=0x7f03000d;
     }
     public static final class menu {
         public static final int create_game=0x7f070000;
