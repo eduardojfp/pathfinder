@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 public class gameDisplay extends Activity  {
 	TextView GameName;
+	TextView Zipcode;
 	TextView StartTime;
 	TextView EndTime;
 	TextView Tasks;
@@ -25,7 +26,9 @@ public class gameDisplay extends Activity  {
 	
 	private static String KEY_SUCCESS = "success";
 	private static String KEY_GAMENAME = "gName";
+	private static String KEY_ZIPCODE = "location";
 	private static String KEY_START_TIME = "sTime";
+	private static String KEY_END_TIME = "eTime";
 	
 	public boolean onCreateOptionsMenu(Menu menu) {
         /* Inflate the menu; this adds items to the action bar if it is present.
@@ -78,12 +81,14 @@ public class gameDisplay extends Activity  {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_display);
 		GameName = (TextView) findViewById(R.id.gameName);
+		Zipcode = (TextView) findViewById(R.id.localGames);
 		StartTime = (TextView) findViewById(R.id.startTime);
 		EndTime = (TextView) findViewById(R.id.endTime);
 		Tasks = (TextView) findViewById(R.id.tasks);
 		
 		//initial values
 		GameName.setText("");
+		Zipcode.setText("");
 		StartTime.setText("");
 		EndTime.setText("");
 		Tasks.setText("");
@@ -119,9 +124,11 @@ public class gameDisplay extends Activity  {
                if (json.getString(KEY_SUCCESS) != null) {
 
 
-                    JSONObject json_user = json.getJSONObject("user");
+                    JSONObject json_user = json.getJSONObject("Game");
         			GameName.setText(json_user.getString(KEY_GAMENAME));
+        			Zipcode.setText(json_user.getString(KEY_ZIPCODE));
         			StartTime.setText(json_user.getString(KEY_START_TIME));
+        			EndTime.setText(json_user.getString(KEY_END_TIME));
                     }
                else{
 

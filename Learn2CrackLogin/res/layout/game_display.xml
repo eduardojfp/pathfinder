@@ -11,7 +11,6 @@
         android:ems="10"
         android:hint="Game Name" >
 
-        <requestFocus />
     </EditText>
 
     <EditText
@@ -22,18 +21,24 @@
         android:hint="Zip Code" />
 
     <EditText
+        android:id="@+id/endTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="End Time" />
+
+    <EditText
         android:id="@+id/startTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Start Time" />
 
-    <EditText
-        android:id="@+id/endTime"
+    <Button
+        android:id="@+id/join_game"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="End Time" />
+        android:text="Join This Game" />
 
     <EditText
         android:id="@+id/tasks"
