@@ -63,7 +63,7 @@ public final class R {
         public static final int recentGames=0x7f080028;
         public static final int recentGamesDisplayed=0x7f080029;
         public static final int regat=0x7f080037;
-        public static final int register=0x7f080032;
+        public static final int register=0x7f080031;
         public static final int register_error=0x7f08002f;
         public static final int registerbtn=0x7f080007;
         public static final int respass=0x7f08001b;
@@ -85,7 +85,7 @@ public final class R {
         public static final int time_limit_check=0x7f080011;
         public static final int uname=0x7f08002e;
         public static final int userName=0x7f080021;
-        public static final int uzip=0x7f080031;
+        public static final int uzip=0x7f080032;
     }
     public static final class layout {
         public static final int activity_display_message=0x7f030000;
