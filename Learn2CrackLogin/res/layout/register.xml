@@ -113,16 +113,6 @@
         android:textSize="15dp" />
 
     <TextView
-            android:layout_width="125dp"
-            android:layout_height="40dp"
-            android:textColor="#000000"
-            android:text="Password"
-            android:id="@+id/textView6"
-            android:layout_alignTop="@+id/pword"
-            android:layout_alignRight="@+id/textView5"
-            android:textSize="15dp"/>
-
-    <TextView
             android:layout_width="fill_parent"
             android:layout_height="56dp"
             android:textColor="#000000"

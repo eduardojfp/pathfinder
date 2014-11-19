@@ -50,7 +50,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_LASTNAME + " TEXT,"
                 + KEY_EMAIL + " TEXT UNIQUE,"
                 + KEY_USERNAME + " TEXT,"
-                + KEY_ZIPCODE + " Text,"
+                + KEY_ZIPCODE + " TEXT,"
                 + KEY_UID + " TEXT,"
                 + KEY_CREATED_AT + " TEXT" + ")";
         db.execSQL(CREATE_LOGIN_TABLE);
