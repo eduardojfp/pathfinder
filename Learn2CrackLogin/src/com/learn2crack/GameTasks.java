@@ -1,5 +1,6 @@
 package com.learn2crack;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,51 +44,7 @@ public class GameTasks extends Activity  {
 
             new findTeamData().execute();
 	        //Create four
-	        for(int j=0;j<=4;j++)
-	        {  
-
-	            LinearLayout ll = new LinearLayout(this);
-	            // Create LinearLayout
-	            ll.setOrientation(LinearLayout.HORIZONTAL);
-	             
-	            // Create TextView
-	            TextView product = new TextView(this);
-	            product.setText(" Product"+j+"    ");
-	            ll.addView(product);
-	             
-	            // Create TextView
-	            TextView price = new TextView(this);
-	            price.setText("  $"+j+"     ");
-	            ll.addView(price);
-	             
-	            // Create Button
-	            final Button btn = new Button(this);
-	                // Give button an ID
-	                btn.setId(j+1);
-	                btn.setText("Add To Cart");
-	                // set the layoutParams on the button
-	                btn.setLayoutParams(params);
-	                 
-	                final int index = j;
-	                // Set click listener for button
-	                btn.setOnClickListener(new View.OnClickListener() {
-	                    public void onClick(View v) {
-	                         
-	                       // Log.i("TAG", "index :" + index);
-	                         
-	                        Toast.makeText(getApplicationContext(),
-	                                "Clicked Button Index :" + index,
-	                                Toast.LENGTH_LONG).show();
-	                         
-	                    }
-	                });
-	                 
-	               //Add button to LinearLayout
-	                ll.addView(btn);
-	               //Add button to LinearLayout defined in XML
-	                lm.addView(ll); 
-	                
-	        }
+	        
 	 }
 	 private class findTeamData extends AsyncTask<String, String, JSONObject> {
 			
@@ -157,9 +115,12 @@ public class GameTasks extends Activity  {
 	  	    
 	  	    String gid = "1";
 
-	  	    LinearLayout a = new LinearLayout(GameTasks.this);
+	  	    LinearLayout name = new LinearLayout(GameTasks.this);
 
-	  	    LinearLayout b = new LinearLayout(GameTasks.this);
+	  	    LinearLayout description = new LinearLayout(GameTasks.this);
+
+	  	    LinearLayout score = new LinearLayout(GameTasks.this);
+	  	    LinearLayout imagesend = new LinearLayout(GameTasks.this);
 
 			@Override
 	        protected void onPreExecute() {
@@ -181,6 +142,38 @@ public class GameTasks extends Activity  {
 	    	                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 	        		
 		        	JSONObject json_user = json.getJSONObject("task"); 
+		        	
+		        	
+		        	JSONObject obj	= json_user.getJSONObject("array0");
+		        	
+		        	JSONObject obj2 = (obj.getJSONObject("data"));
+		        	TextView taskName = new TextView(GameTasks.this);
+		        	taskName.setText(obj2.getString("tname"));
+		        	name.addView(taskName);
+		        	
+		        	TextView taskDescription = new TextView(GameTasks.this);
+		        	taskDescription.setText("Task Description: " + obj2.getString("tdescription"));
+		        	description.addView(taskDescription );
+		        	
+		        	TextView taskScore = new TextView(GameTasks.this);
+		        	taskScore.setText(obj2.getString("score"));
+		        	score.addView(taskScore);
+		        	if(obj2.getString("complete").equals("0")){
+		        		ImageButton image = new ImageButton(GameTasks.this);
+		        		image.setBackgroundResource(R.drawable.picture_icon);
+		        		image.setId(obj2.getInt("tid")); //set id to be value of taskid
+		        		imagesend.addView(image);
+		        		
+		        		Button send = new Button(GameTasks.this);
+		        		send.setText("Send");
+		        		send.setId(obj2.getInt("tid"));
+		        		imagesend.addView(send);
+		        		
+		        	}
+		        	//taskScore.setText("Points: " + obj2.getString("score"));
+		        	//score.addView(taskScore);
+		        	
+		        	
 		            /*a.setOrientation(LinearLayout.HORIZONTAL);
 		            
 		            TextView teamname = new TextView(GameTasks.this); //display teamname
@@ -196,8 +189,10 @@ public class GameTasks extends Activity  {
 	                e.printStackTrace();
 	            }
 
-             //lm.addView(a); 
-             //lm.addView(b); 
+             lm.addView(name); 
+             lm.addView(description); 
+             lm.addView(score); 
+             lm.addView(imagesend); 
 	        }
 			
 		}
