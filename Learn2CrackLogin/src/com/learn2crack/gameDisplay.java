@@ -85,7 +85,7 @@ public class gameDisplay extends Activity  {
 		StartTime = (TextView) findViewById(R.id.startTime);
 		EndTime = (TextView) findViewById(R.id.endTime);
 		Tasks = (TextView) findViewById(R.id.tasks);
-		
+		/*
 		//initial values
 		GameName.setText("");
 		Zipcode.setText("");
@@ -97,6 +97,7 @@ public class gameDisplay extends Activity  {
 			Tasks.append(AllTasks[i]);
 			Tasks.append("\n");
 		}
+		*/
 		new GetGameData().execute();		
 	}
 	private class GetGameData extends AsyncTask<String, String, JSONObject> {
