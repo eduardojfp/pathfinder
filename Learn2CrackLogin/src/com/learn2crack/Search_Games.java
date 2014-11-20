@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -121,10 +122,26 @@ public class Search_Games extends Activity  {
 				
                 }
 				
-		});
-		
-		
+		});	
 	}
+	
+	OnClickListener btnClickListener = new OnClickListener() {
+		@Override
+	    public void onClick(View v) {
+			Object test = v.getTag();
+			test.toString();
+			SharedPreferences prefs = Search_Games.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
+			String savegid = "com.example.app.gid";
+			SharedPreferences.Editor editor = prefs.edit();
+			String gid = test.toString();
+			editor.putString(savegid, gid);
+			editor.commit();
+			Intent intent = new Intent(Search_Games.this, gameDisplay.class);
+	    	startActivity(intent);
+			
+		}
+	};
+	
 	private class GetGameData extends AsyncTask<String, String, JSONObject> {
 		//some variables
 	 	SharedPreferences prefs = Search_Games.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
@@ -156,17 +173,21 @@ public class Search_Games extends Activity  {
 	            a.setOrientation(LinearLayout.HORIZONTAL);
 	            
 	        	///save game id
+	            /*
 	        	   SharedPreferences prefs = Search_Games.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
             	   String savedGame = "com.example.app.gid";
             	   SharedPreferences.Editor editor = prefs.edit();
             	   String gid = json_user.getString("gid");
             	   editor.putString(savedGame, gid);
             	   editor.commit();
+            	   */
+	            
 	            
 	            //add game
 	            TextView gameName = new TextView(Search_Games.this);
 	            gameName.setLayoutParams(params);
 	            gameName.setText(json_user.getString("gname"));
+	            gameName.setOnClickListener(btnClickListener);
 	            a.addView(gameName);
 	            
             } catch (JSONException e) {
