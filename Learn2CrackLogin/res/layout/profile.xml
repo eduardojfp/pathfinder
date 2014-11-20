@@ -2,16 +2,16 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-    <LinearLayout android:id="@+id/menu_ll"
+    <LinearLayout android:id="@+id/linear"
         android:orientation="vertical" 
         android:layout_width="fill_parent" android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/Name"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Name"
-        android:textColor="#000000"
+        android:textColor="#0FFFFF"
         android:textSize="20dp" />
     
     <View
@@ -30,7 +30,7 @@
 	    android:id="@+id/timeJoined"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-        android:textColor="#000000"
+        android:textColor="#0FFFFF"
         android:textSize="20dp" 
 	    android:text="Time Joined" />
 	<View
@@ -52,7 +52,7 @@
 	    android:id="@+id/about"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-        android:textColor="#000000"
+        android:textColor="#0FFFFF"
         android:textSize="20dp" 
 	    android:text="About" />
 	<View
@@ -70,7 +70,7 @@
 	    android:id="@+id/contact"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-        android:textColor="#000000"
+        android:textColor="#0FFFFF"
         android:textSize="20dp" 
 	    android:text="Contact" />
 	<View
@@ -84,11 +84,18 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:inputType="text" />
+	<Button
+        android:id="@+id/Save"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:text="Save"
+        android:textColor="#000000"
+        android:textSize="13dp" />
 	<TextView
 	    android:id="@+id/recentGames"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-        android:textColor="#000000"
+        android:textColor="#0FFFFF"
         android:textSize="20dp" 
 	    android:text="Recent Games" />
 	<View
@@ -96,6 +103,7 @@
     	android:layout_height="1dp"
     	android:background="#FF0000FF" 
     />
+	<!--
 	<TextView
 	    android:id="@+id/recentGamesDisplayed"
 	    android:layout_width="wrap_content"
@@ -103,8 +111,9 @@
         android:textColor="#FFFFFF"
         android:textSize="20dp"
 	    android:text="No games played"  />
+	-->
 	
-	<TextView
+	<!--  <TextView
 	    android:id="@+id/teams"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
@@ -123,14 +132,8 @@
         android:textColor="#FFFFFF"
         android:textSize="20dp"
 	    android:text="Insert Teams Here"  />
+	 -->
 	
-	<Button
-        android:id="@+id/Save"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:text="Save"
-        android:textColor="#000000"
-        android:textSize="13dp" />
     
 </LinearLayout>
 

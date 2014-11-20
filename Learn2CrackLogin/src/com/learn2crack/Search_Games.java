@@ -28,7 +28,7 @@ public class Search_Games extends Activity  {
 	
 	Button Games = new Button(this);
 	LinearLayout ll = (LinearLayout)findViewById(R.id.localGames);
-	ll.addView(Games, lp);
+	//ll.addView(Games, lp);
 	
 	private static String KEY_SUCCESS = "success";
 	private static String KEY_ZIPCODE = "zipcode";
@@ -91,7 +91,7 @@ public class Search_Games extends Activity  {
 		setContentView(R.layout.search_games);
 		SearchButton = (Button) findViewById(R.id.searchButton);
 		SearchInput = (EditText) findViewById(R.id.searchLoc);
-		Games = (TextView) findViewById(R.id.localGames);
+		Games = (Button) findViewById(R.id.localGames);
 		createGame = (Button) findViewById(R.id.create_game);
 		
 		createGame.setOnClickListener(new View.OnClickListener() {

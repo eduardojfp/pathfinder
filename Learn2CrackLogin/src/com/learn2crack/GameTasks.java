@@ -25,12 +25,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class GameTasks extends Activity  { 
-	 LinearLayout lm;
+	LinearLayout lm;
+	TextView GameName;
+	TextView Zipcode;
+	TextView StartTime;
+	TextView EndTime;
+	
+	private static String KEY_SUCCESS = "success";
+	private static String KEY_GAMENAME = "gName";
+	private static String KEY_ZIPCODE = "location";
+	private static String KEY_START_TIME = "starttime";
+	private static String KEY_END_TIME = "endtime";
 
 	 protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.game_tasks);
 	        
+	        
+	        GameName = (TextView) findViewById(R.id.gameName);
+			StartTime = (TextView) findViewById(R.id.startTime);
+			EndTime = (TextView) findViewById(R.id.endTime);
+			new getGameDataGid().execute();
+			
 	   	    lm = (LinearLayout) findViewById(R.id.linear);
 
 	   	    
@@ -43,15 +59,62 @@ public class GameTasks extends Activity  {
 	        
 
             new findTeamData().execute();
-	        //Create four
+	        
 	        
 	 }
+	 ///get Game data
+	 private class getGameDataGid extends AsyncTask<String, String, JSONObject> {
+			
+	        @Override
+	        protected void onPreExecute() {
+	            super.onPreExecute();
+	        }
+
+	        @Override
+	        protected JSONObject doInBackground(String... args) {
+
+	        	String gid = "1";
+	        	UserFunctions userFunction = new UserFunctions();
+	            JSONObject json = userFunction.getGameDataGid(gid);
+	            return json;
+	        }
+
+	        @Override
+	        protected void onPostExecute(JSONObject json) {
+	            try {
+	               if (json.getString(KEY_SUCCESS) != null) {
+
+	            	   String res = json.getString(KEY_SUCCESS);
+
+	                    JSONObject json_user = json.getJSONObject("Game");
+	                    GameName.setText(json_user.getString("gname"));
+	                    StartTime.setText("Start Time: " + json_user.getString("starttime"));
+	        			EndTime.setText("End Time: " +json_user.getString("endtime"));
+	                
+	            }
+	               else
+	               {
+	               }
+	               } catch (JSONException e) {
+	                e.printStackTrace();
+	            }
+	       }
+			
+			
+		}
+	 
+	 
+	 
+	 
+	 
 	 private class findTeamData extends AsyncTask<String, String, JSONObject> {
 			
 			SharedPreferences prefs = GameTasks.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
 	  	    String saveduid = "com.example.app.uid";
 	  	    String uid = prefs.getString(saveduid, "none");
-	  	    String gid = "1";
+	  	    SharedPreferences prefs2 = GameTasks.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
+	  	    String savegid = "com.example.app.gid";
+	  	    String gid = prefs2.getString(savegid, "none");
 
 	  	    LinearLayout a = new LinearLayout(GameTasks.this);
 
@@ -111,9 +174,12 @@ public class GameTasks extends Activity  {
 			
 		 	SharedPreferences prefs = GameTasks.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
 		 	String savedteam = "com.example.app.teamid";
-	  	    String teamid =  "1"; //prefs.getString(savedteam, "1");
+	  	    String teamid =  prefs.getString(savedteam, "1");
 	  	    
-	  	    String gid = "1";
+
+	  	    SharedPreferences prefs2 = GameTasks.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
+	  	    String savegid = "com.example.app.gid";
+	  	    String gid = prefs2.getString(savegid, "none");
 
 	  	    LinearLayout name = new LinearLayout(GameTasks.this);
 
