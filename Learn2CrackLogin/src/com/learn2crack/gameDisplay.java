@@ -57,7 +57,7 @@ public class gameDisplay extends Activity  {
 	            //openSettings();
 	            return true;
 	        case R.id.action_profile:
-	            //openProfile();
+	            openProfile();
 	            return true;
 	        case R.id.action_logout:
 	        	openLogout();
@@ -75,6 +75,10 @@ public class gameDisplay extends Activity  {
     	Intent intent = new Intent(this, Search_Games.class);
     	startActivity(intent);
     }
+	public void openProfile(){
+		Intent intent = new Intent(this, Profile.class);
+    	startActivity(intent);
+	}
 	public void openLogout() {
 		Intent intent = new Intent(this, Login.class);
 		startActivity(intent);

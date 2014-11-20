@@ -72,12 +72,12 @@ public class Search_Games extends Activity  {
     }
 	
 	public void openLogout() {
-		Intent intent = new Intent(this, gameDisplay.class);
+		Intent intent = new Intent(this, Login.class);
 		startActivity(intent);
 	}
 	
 	public void openProfile() {
-		Intent intent = new Intent (this, Login.class);
+		Intent intent = new Intent (this, Profile.class);
 		startActivity(intent);
 	}
 
