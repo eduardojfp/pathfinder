@@ -51,7 +51,7 @@ public final class R {
         public static final int fname=0x7f08002b;
         public static final int forpas=0x7f08001e;
         public static final int gameName=0x7f080013;
-        public static final int join_game=0x7f080017;
+        public static final int join_game=0x7f080018;
         public static final int linear=0x7f080019;
         public static final int lname=0x7f08001c;
         public static final int localGames=0x7f080014;
@@ -73,7 +73,6 @@ public final class R {
         public static final int searchLoc=0x7f080037;
         public static final int startTime=0x7f080016;
         public static final int task_num=0x7f080010;
-        public static final int tasks=0x7f080018;
         public static final int textView=0x7f080009;
         public static final int textView11=0x7f080034;
         public static final int textView2=0x7f080003;
@@ -89,6 +88,7 @@ public final class R {
         public static final int uname=0x7f08002c;
         public static final int userName=0x7f080022;
         public static final int uzip=0x7f080030;
+        public static final int viewTasksButton=0x7f080017;
     }
     public static final class layout {
         public static final int activity_display_message=0x7f030000;

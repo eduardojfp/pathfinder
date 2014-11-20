@@ -14,19 +14,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Button;
 
 public class gameDisplay extends Activity  {
 	TextView GameName;
 	TextView Zipcode;
 	TextView StartTime;
 	TextView EndTime;
-	TextView Tasks;
-	String[] AllTasks = {"task1", "task2", "task3"};
+	Button ViewTasks;
+	Button JoinGame;
 	
 	private static String KEY_SUCCESS = "success";
 	private static String KEY_GAMENAME = "gName";
-	//private static String KEY_ZIPCODE = "location";
+	private static String KEY_ZIPCODE = "location";
 	private static String KEY_START_TIME = "starttime";
 	private static String KEY_END_TIME = "endtime";
 	
@@ -84,20 +86,21 @@ public class gameDisplay extends Activity  {
 		Zipcode = (TextView) findViewById(R.id.localGames);
 		StartTime = (TextView) findViewById(R.id.startTime);
 		EndTime = (TextView) findViewById(R.id.endTime);
-		Tasks = (TextView) findViewById(R.id.tasks);
-		/*
-		//initial values
-		GameName.setText("");
-		Zipcode.setText("");
-		StartTime.setText("");
-		EndTime.setText("");
-		Tasks.setText("");
+		ViewTasks = (Button) findViewById(R.id.viewTasksButton);
+		JoinGame = (Button) findViewById(R.id.join_game);
 		
-		for(int i = 0; i < (Integer)AllTasks.length; i++){
-			Tasks.append(AllTasks[i]);
-			Tasks.append("\n");
-		}
-		*/
+		//buttons
+		ViewTasks.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+					new GameTasks();
+                }	
+		});
+		JoinGame.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+					//TODO: add player to game	
+                }	
+		});
+
 		new GetGameData().execute();		
 	}
 	private class GetGameData extends AsyncTask<String, String, JSONObject> {

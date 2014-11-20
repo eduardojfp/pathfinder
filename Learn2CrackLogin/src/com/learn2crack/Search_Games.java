@@ -184,6 +184,7 @@ public class Search_Games extends Activity  {
 	            //add game
 	            TextView gameName = new TextView(Search_Games.this);
 	            gameName.setLayoutParams(params);
+	            gameName.setTag(json_user.getInt("gid"));
 	            gameName.setText(json_user.getString("gname"));
 	            gameName.setOnClickListener(btnClickListener);
 	            a.addView(gameName);
