@@ -19,12 +19,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.LinearLayout;
 
 public class Search_Games extends Activity  {
 	EditText SearchInput;
 	Button SearchButton;
-	TextView Games;
 	Button createGame;
+	
+	Button Games = new Button(this);
+	LinearLayout ll = (LinearLayout)findViewById(R.id.localGames);
+	ll.addView(Games, lp);
 	
 	private static String KEY_SUCCESS = "success";
 	private static String KEY_ZIPCODE = "zipcode";
