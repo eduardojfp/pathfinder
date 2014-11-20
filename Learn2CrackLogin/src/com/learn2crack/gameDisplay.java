@@ -27,7 +27,7 @@ public class gameDisplay extends Activity  {
 	Button JoinGame;
 	
 	private static String KEY_SUCCESS = "success";
-	private static String KEY_GAMENAME = "gName";
+	private static String KEY_GAMENAME = "gname";
 	private static String KEY_ZIPCODE = "location";
 	private static String KEY_START_TIME = "starttime";
 	private static String KEY_END_TIME = "endtime";
