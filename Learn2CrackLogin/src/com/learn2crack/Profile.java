@@ -86,7 +86,7 @@ public class Profile extends Activity  {
     }
 
 	public void openLogout() {
-		Intent intent = new Intent(this, Login.class);
+		Intent intent = new Intent(this, GameTasks.class);
 		startActivity(intent);
 	}
 
