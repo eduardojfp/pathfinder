@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 
 public class Profile extends Activity  {
-	LinearLayout lm;
+	LinearLayout lm; //master layout
 	Button saveProfile;
 	EditText inputUsername;
 	EditText inputAbout;
@@ -65,10 +65,10 @@ public class Profile extends Activity  {
 	        	createGame();
 	        	return true;
 	        case R.id.action_settings:
-	            //openSettings();
+	            //openSettings(); //no settings
 	            return true;
 	        case R.id.action_profile:
-	            //openProfile();
+	            //openProfile(); //none for profile because already in it
 	            return true;
 	        case R.id.action_logout:
 	        	openLogout();
@@ -79,64 +79,38 @@ public class Profile extends Activity  {
     }
 	
 	public void createGame() {
-    	Intent intent = new Intent(this, CreateGameActivity.class);
+    	Intent intent = new Intent(this, CreateGameActivity.class); //go to create game
     	startActivity(intent);
     }
 	public void openSearch() {
-    	Intent intent = new Intent(this, Search_Games.class);
+    	Intent intent = new Intent(this, Search_Games.class); //go to search
     	startActivity(intent);
     }
 
 	public void openLogout() {
-		Intent intent = new Intent(this, Login.class);
+		Intent intent = new Intent(this, Login.class); //logout
 		startActivity(intent);
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		
-       // json.getString(KEY_FIRSTNAME);
-        //json.getString(KEY_LASTNAME);
-        //json.getString(KEY_EMAIL);
-        //json.getString(KEY_USERNAME);
-        //json.getString(KEY_UID);
-      //  json.getString(KEY_CREATED_AT);
+       
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profile);
 
-		lm = (LinearLayout) findViewById(R.id.linear);
+		lm = (LinearLayout) findViewById(R.id.linear); //setlayout to be the same as current
+		//create fields from xml
 		inputUsername = (EditText) findViewById(R.id.userName);
 		inputAbout = (EditText) findViewById(R.id.aboutText);
 		inputContact = (EditText) findViewById(R.id.contactText);
 		saveProfile = (Button) findViewById(R.id.Save);
 		TimeJoined = (TextView) findViewById(R.id.time);
-		//some database thing
-		/*Games.setText("");
-		Teams.setText("");
-		for(int i = 0; i < (Integer)RecentGames.length; i++){
-			Games.append(RecentGames[i]);
-			Games.append("\n");
-		}
-		for(int i = 0; i < (Integer)RecentTeams.length; i++){
-			Teams.append(RecentTeams[i]);
-			Teams.append("\n");
-		}*/
+		
+		//run fuctions to get data
 		new GetUserData().execute();
 		new GetGamesByUid().execute();
 		
-		/*String uid = "13";
-		UserFunctions userFunction = new UserFunctions();
-        JSONObject json = userFunction.getUserData(uid);
-        
-        try {
-			JSONObject json_user = json.getJSONObject("user");
-			inputUsername.setText(json_user.getString(KEY_USERNAME));
-			TimeJoined.setText(json_user.getString(KEY_CREATED_AT));
-			inputAbout.setText(json_user.getString(KEY_ABOUT));
-			inputContact.setText(json_user.getString(KEY_CONTACT));
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		
 		saveProfile.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				if  ( !inputUsername.getText().toString().equals(""))
@@ -145,7 +119,7 @@ public class Profile extends Activity  {
 
 					new SetUserData().execute();
 					
-                } else if(inputUsername.getText().toString().equals("")) {
+                } else if(inputUsername.getText().toString().equals("")) { //don't save
                 	Toast.makeText(getApplicationContext(),
                             "Username is empty", Toast.LENGTH_SHORT).show();
                 	
@@ -158,23 +132,24 @@ public class Profile extends Activity  {
 	}
 	OnClickListener btnClickListener = new OnClickListener() {
 		@Override
-	    public void onClick(View v) {
-			Object test = v.getTag();
+	    public void onClick(View v) { //click on game will take you to the game
+			Object test = v.getTag(); //get the id
 			test.toString();
+			//shared preference creates a variable that all fuctions can access
 			SharedPreferences prefs = Profile.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
 			String savegid = "com.example.app.gid";
 			SharedPreferences.Editor editor = prefs.edit();
-			String gid = test.toString();
-			editor.putString(savegid, gid);
-			editor.commit();
-			Intent intent = new Intent(Profile.this, GameTasks.class);
+			String gid = test.toString(); //save the id to shared preference
+			editor.putString(savegid, gid); 
+			editor.commit(); 
+			Intent intent = new Intent(Profile.this, GameTasks.class); //go to the game
 	    	startActivity(intent);
 			
 		}
 	};
 	/////Gets Games by ID
-	private class GetGamesByUid extends AsyncTask<String, String, JSONObject> {
-		
+	private class GetGamesByUid extends AsyncTask<String, String, JSONObject> { //goes into database and gets a list of games user is playing
+		//get uid that was saved in login
 		SharedPreferences prefs = Profile.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
   	    String saveduid = "com.example.app.uid";
   	    String uid = prefs.getString(saveduid, "none");
@@ -190,29 +165,24 @@ public class Profile extends Activity  {
         protected JSONObject doInBackground(String... args) {
         	
         	UserFunctions userFunction = new UserFunctions();
-            JSONObject json = userFunction.getGamesByUid(uid);
+            JSONObject json = userFunction.getGamesByUid(uid); //to user fuctions
             return json;
         }
 
         @Override
         protected void onPostExecute(JSONObject json) {
+        	//creates a list of games user is playing
         	try {
         		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( //set params
     	                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 	        	JSONObject json_user = json.getJSONObject("user"); 
 	           a.setOrientation(LinearLayout.HORIZONTAL);
-        	   /*SharedPreferences prefs = Profile.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
-           	   String savegid = "com.example.app.gid";
-           	   SharedPreferences.Editor editor = prefs.edit();
-           	   String gid = json_user.getString("gid");
-           	   editor.putString(savegid, teamid);
-           	   editor.commit();*/
-        		///        
-	            TextView gamename = new TextView(Profile.this); //display teamname
-	            gamename.setLayoutParams(params);
-	            gamename.setTag(json_user.getInt("gid"));
-	            gamename.setText(json_user.getString("gname"));
-				gamename.setOnClickListener(btnClickListener);
+	           
+	            TextView gamename = new TextView(Profile.this); //dynamic xml
+	            gamename.setLayoutParams(params); 
+	            gamename.setTag(json_user.getInt("gid")); //set id same as gid
+	            gamename.setText(json_user.getString("gname")); //set the name
+				gamename.setOnClickListener(btnClickListener); //add a listener
 	            a.addView(gamename);
 	            
             } catch (JSONException e) {
@@ -224,13 +194,12 @@ public class Profile extends Activity  {
 		
 	}
 	////Get user Data
-	private class GetUserData extends AsyncTask<String, String, JSONObject> {
+	private class GetUserData extends AsyncTask<String, String, JSONObject> { //goes into database and gets user data
 		
-		
+		//shared preference from profile
 		SharedPreferences prefs = Profile.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
   	    String saveduid = "com.example.app.uid";
   	    String uid = prefs.getString(saveduid, "none");
-  	    //String uid = "13";
 
         @Override
         protected void onPreExecute() {
@@ -247,6 +216,7 @@ public class Profile extends Activity  {
 
         @Override
         protected void onPostExecute(JSONObject json) {
+        	//change the text fields based on what has been found in the database
             try {
                if (json.getString(KEY_SUCCESS) != null) {
 
@@ -260,7 +230,7 @@ public class Profile extends Activity  {
         			if(json_user.getString(KEY_CONTACT) != "null"){
         				inputContact.setText(json_user.getString(KEY_CONTACT));
         			}
-        			if(uid == "none"){
+        			if(uid == "none"){//testing sharedpref working
         				inputUsername.setText("Saved Did not work");
         			}
         			
@@ -276,11 +246,11 @@ public class Profile extends Activity  {
 		
 		
 	}
-	private class SetUserData extends AsyncTask<String, String, JSONObject> {
+	private class SetUserData extends AsyncTask<String, String, JSONObject> { //goes into the database and changes user data based on changes made
 		String username = inputUsername.getText().toString();
 		String about = inputAbout.getText().toString();
 		String contact = inputContact.getText().toString();
-		
+		//from login
 		SharedPreferences prefs = Profile.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
   	    String saveduid = "com.example.app.uid";
   	    String uid = prefs.getString(saveduid, "none");
@@ -299,7 +269,7 @@ public class Profile extends Activity  {
         }
 
         @Override
-        protected void onPostExecute(JSONObject json) {
+        protected void onPostExecute(JSONObject json) { //message of success or failure
         	try {
                 if (json.getString(KEY_SUCCESS) != null) {
                 	Toast.makeText(getApplicationContext(),"Saved", Toast.LENGTH_SHORT).show();

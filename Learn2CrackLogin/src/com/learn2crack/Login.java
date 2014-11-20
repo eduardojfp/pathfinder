@@ -226,7 +226,7 @@ public class Login extends Activity {
                         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                         JSONObject json_user = json.getJSONObject("user");
                         
-                        
+                        //Saves the uid in sharedpref so that other classes can use it as well. 
                        SharedPreferences prefs = Login.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
                  	   String saveduid = "com.example.app.uid";
                  	   SharedPreferences.Editor editor = prefs.edit();

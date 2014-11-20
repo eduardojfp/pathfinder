@@ -18,6 +18,7 @@ import com.learn2crack.library.DatabaseHandler;
 import java.util.HashMap;
 
 public class Main extends Activity {
+	//NOT IN USE (maybe for testing)
     Button btnLogout;
     Button changepas;
 

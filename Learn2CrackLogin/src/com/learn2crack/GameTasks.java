@@ -32,19 +32,16 @@ public class GameTasks extends Activity  {
 	TextView EndTime;
 	
 	private static String KEY_SUCCESS = "success";
-	private static String KEY_GAMENAME = "gName";
-	private static String KEY_ZIPCODE = "location";
-	private static String KEY_START_TIME = "starttime";
-	private static String KEY_END_TIME = "endtime";
 
 	 protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.game_tasks);
 	        
-	        
+	        //set layout/text to xml
 	        GameName = (TextView) findViewById(R.id.gameName);
 			StartTime = (TextView) findViewById(R.id.startTime);
 			EndTime = (TextView) findViewById(R.id.endTime);
+			//get the game data
 			new getGameDataGid().execute();
 			
 	   	    lm = (LinearLayout) findViewById(R.id.linear);
@@ -57,13 +54,13 @@ public class GameTasks extends Activity  {
 	                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 	         
 	        
-
+	        //get the teamdata
             new findTeamData().execute();
 	        
 	        
 	 }
 	 ///get Game data
-	 private class getGameDataGid extends AsyncTask<String, String, JSONObject> {
+	 private class getGameDataGid extends AsyncTask<String, String, JSONObject> {//go into database and get game data base gid
 			
 	        @Override
 	        protected void onPreExecute() {
@@ -72,8 +69,10 @@ public class GameTasks extends Activity  {
 
 	        @Override
 	        protected JSONObject doInBackground(String... args) {
-
-	        	String gid = "1";
+	        	//saved gid from profile
+	        	SharedPreferences prefs2 = GameTasks.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
+		  	    String savegid = "com.example.app.gid";
+		  	    String gid = prefs2.getString(savegid, "none");
 	        	UserFunctions userFunction = new UserFunctions();
 	            JSONObject json = userFunction.getGameDataGid(gid);
 	            return json;
@@ -85,7 +84,7 @@ public class GameTasks extends Activity  {
 	               if (json.getString(KEY_SUCCESS) != null) {
 
 	            	   String res = json.getString(KEY_SUCCESS);
-
+	            	   //set the data of xml with data from database
 	                    JSONObject json_user = json.getJSONObject("Game");
 	                    GameName.setText(json_user.getString("gname"));
 	                    StartTime.setText("Start Time: " + json_user.getString("starttime"));
@@ -107,17 +106,18 @@ public class GameTasks extends Activity  {
 	 
 	 
 	 
-	 private class findTeamData extends AsyncTask<String, String, JSONObject> {
-			
+	 private class findTeamData extends AsyncTask<String, String, JSONObject> {//find team info using gameid and userid
+			//uid from login
 			SharedPreferences prefs = GameTasks.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
 	  	    String saveduid = "com.example.app.uid";
 	  	    String uid = prefs.getString(saveduid, "none");
+	  	    //gid from profile
 	  	    SharedPreferences prefs2 = GameTasks.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
 	  	    String savegid = "com.example.app.gid";
 	  	    String gid = prefs2.getString(savegid, "none");
-
+	  	    
+	  	    //two layouts to add
 	  	    LinearLayout a = new LinearLayout(GameTasks.this);
-
 	  	    LinearLayout b = new LinearLayout(GameTasks.this);
 
 			@Override
@@ -149,7 +149,7 @@ public class GameTasks extends Activity  {
                	   editor.commit();
 	        		///
 	        		
-		            
+		            //set text based on data found
 		            TextView teamname = new TextView(GameTasks.this); //display teamname
 		            teamname.setLayoutParams(params);
 		            teamname.setText(json_user.getString("teamname"));
@@ -165,22 +165,23 @@ public class GameTasks extends Activity  {
 
                 lm.addView(a); 
                 lm.addView(b); 
-                new getTaskData().execute();
+                new getTaskData().execute(); //execute get task after
 	        }
 			
 		}
 	//////////////////get task info from database
-	 private class getTaskData extends AsyncTask<String, String, JSONObject> {
-			
+	 private class getTaskData extends AsyncTask<String, String, JSONObject> {//goes into tasks and gets taskinfo based on teamid and gameid
+			//from previous fuction
 		 	SharedPreferences prefs = GameTasks.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
 		 	String savedteam = "com.example.app.teamid";
 	  	    String teamid =  prefs.getString(savedteam, "1");
 	  	    
-
+	  	    //from profile
 	  	    SharedPreferences prefs2 = GameTasks.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
 	  	    String savegid = "com.example.app.gid";
 	  	    String gid = prefs2.getString(savegid, "none");
 
+	  	    //dynaimic layout to add
 	  	    LinearLayout name = new LinearLayout(GameTasks.this);
 
 	  	    LinearLayout description = new LinearLayout(GameTasks.this);
@@ -206,13 +207,14 @@ public class GameTasks extends Activity  {
 	        	try {
 	        		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( //set params
 	    	                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-	        		
+	        		//in multiple objects
 		        	JSONObject json_user = json.getJSONObject("task"); 
 		        	
 		        	
 		        	JSONObject obj	= json_user.getJSONObject("array0");
 		        	
 		        	JSONObject obj2 = (obj.getJSONObject("data"));
+		        	//set the text based off of data found
 		        	TextView taskName = new TextView(GameTasks.this);
 		        	taskName.setText(obj2.getString("tname"));
 		        	name.addView(taskName);
@@ -224,7 +226,7 @@ public class GameTasks extends Activity  {
 		        	TextView taskScore = new TextView(GameTasks.this);
 		        	taskScore.setText(obj2.getString("score"));
 		        	score.addView(taskScore);
-		        	if(obj2.getString("complete").equals("0")){
+		        	if(obj2.getString("complete").equals("0")){ //if task not complete add a send and image button
 		        		ImageButton image = new ImageButton(GameTasks.this);
 		        		image.setBackgroundResource(R.drawable.picture_icon);
 		        		image.setId(obj2.getInt("tid")); //set id to be value of taskid
@@ -232,29 +234,14 @@ public class GameTasks extends Activity  {
 		        		
 		        		Button send = new Button(GameTasks.this);
 		        		send.setText("Send");
-		        		send.setId(obj2.getInt("tid"));
+		        		send.setId(obj2.getInt("tid")); //set id to be value of taskid
 		        		imagesend.addView(send);
 		        		
 		        	}
-		        	//taskScore.setText("Points: " + obj2.getString("score"));
-		        	//score.addView(taskScore);
-		        	
-		        	
-		            /*a.setOrientation(LinearLayout.HORIZONTAL);
-		            
-		            TextView teamname = new TextView(GameTasks.this); //display teamname
-		            teamname.setLayoutParams(params);
-		            teamname.setText(json_user.getString("teamname"));
-		            a.addView(teamname);
-		            
-		            TextView score = new TextView(GameTasks.this);
-		            score.setLayoutParams(params);
-		            score.setText("Score: "+json_user.getString("score"));
-		            b.addView(score);*/
 	            } catch (JSONException e) {
 	                e.printStackTrace();
 	            }
-
+	        //add layout
              lm.addView(name); 
              lm.addView(description); 
              lm.addView(score); 

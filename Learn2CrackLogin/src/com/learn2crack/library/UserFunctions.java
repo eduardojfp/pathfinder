@@ -18,12 +18,13 @@ public class UserFunctions {
 
     private JSONParser jsonParser;
 
-    //URL of the PHP API
+    //URL of the PHP API. all the same 
     private static String loginURL = "http://team-pathfinder.tk/a4794025_DB/";
     private static String registerURL = "http://team-pathfinder.tk/a4794025_DB/";
     private static String forpassURL = "http://team-pathfinder.tk/a4794025_DB/";
     private static String chgpassURL = "http://team-pathfinder.tk/a4794025_DB/";
     private static String getGameDataURL = "http://team-pathfinder.tk/a4794025_DB/";
+    
     private static String getTaskData_tag = "getTaskData";
     private static String findTeamData_tag = "findTeamData";
 
@@ -115,6 +116,9 @@ public class UserFunctions {
         JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
         return json;
     }
+    /**
+     * Function to get User Data
+     **/
     public JSONObject getUserData(String uid){
     	
     	List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -123,7 +127,10 @@ public class UserFunctions {
         JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
     	return json;
     }
-public JSONObject setUserData(String uid, String username, String about, String contact){
+    /**
+     * Function set user data
+     **/
+    public JSONObject setUserData(String uid, String username, String about, String contact){
     	
     	List<NameValuePair> params = new ArrayList<NameValuePair>();
     	params.add(new BasicNameValuePair("tag", setUserData_tag));
@@ -134,49 +141,61 @@ public JSONObject setUserData(String uid, String username, String about, String 
         JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
     	return json;
     }
-public JSONObject findTeamData(String uuid, String gid){
-	
-	List<NameValuePair> params = new ArrayList<NameValuePair>();
-	params.add(new BasicNameValuePair("tag", findTeamData_tag));
-	params.add(new BasicNameValuePair("uuid", uuid));
-	params.add(new BasicNameValuePair("gid", gid));
-    JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
-	return json;
-} 
-public JSONObject getTaskData(String teamid, String gid){
-	
-	List<NameValuePair> params = new ArrayList<NameValuePair>();
-	params.add(new BasicNameValuePair("tag", getTaskData_tag));
-	params.add(new BasicNameValuePair("teamid", teamid));
-	params.add(new BasicNameValuePair("gid", gid));
-    JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
-	return json;
-}   
-public JSONObject getGameDataGid(String gid){
-	List<NameValuePair> params = new ArrayList<NameValuePair>();
-	params.add(new BasicNameValuePair("tag", getGameDataGid_tag));
-	params.add(new BasicNameValuePair("gid", gid));
-    JSONObject json = jsonParser.getJSONFromUrl(getGameDataURL,params);
-	return json;
-}
+    /**
+     * Function to find Team data
+     **/
+	public JSONObject findTeamData(String uuid, String gid){
+		
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("tag", findTeamData_tag));
+		params.add(new BasicNameValuePair("uuid", uuid));
+		params.add(new BasicNameValuePair("gid", gid));
+	    JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
+		return json;
+	} 
 	/**
-	 * Function to get game data
+     * Function to get task data
+     **/
+	public JSONObject getTaskData(String teamid, String gid){
+		
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("tag", getTaskData_tag));
+		params.add(new BasicNameValuePair("teamid", teamid));
+		params.add(new BasicNameValuePair("gid", gid));
+	    JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
+		return json;
+	}
+	/**
+     * Function to get game data by gid
+     **/
+	public JSONObject getGameDataGid(String gid){
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("tag", getGameDataGid_tag));
+		params.add(new BasicNameValuePair("gid", gid));
+	    JSONObject json = jsonParser.getJSONFromUrl(getGameDataURL,params);
+		return json;
+	}
+	/**
+	 * Function to get game data by uid
 	 */
-public JSONObject getGamesByUid(String uid){
-	List<NameValuePair> params = new ArrayList<NameValuePair>();
-	params.add(new BasicNameValuePair("tag", getGamesByUid_tag));
-	params.add(new BasicNameValuePair("uid", uid));
-    JSONObject json = jsonParser.getJSONFromUrl(getGameDataURL,params);
-	return json;
-	
-}
-public JSONObject getGameData(String uzip){
-	List<NameValuePair> params = new ArrayList<NameValuePair>();
-	params.add(new BasicNameValuePair("tag", getGameData_tag));
-	params.add(new BasicNameValuePair("uzip", uzip));
-    JSONObject json = jsonParser.getJSONFromUrl(getGameDataURL,params);
-	return json;
-}
+	public JSONObject getGamesByUid(String uid){
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("tag", getGamesByUid_tag));
+		params.add(new BasicNameValuePair("uid", uid));
+	    JSONObject json = jsonParser.getJSONFromUrl(getGameDataURL,params);
+		return json;
+		
+	}
+	/**
+     * Function get game data by zipcode
+     **/
+	public JSONObject getGameData(String uzip){
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("tag", getGameData_tag));
+		params.add(new BasicNameValuePair("uzip", uzip));
+	    JSONObject json = jsonParser.getJSONFromUrl(getGameDataURL,params);
+		return json;
+	}
 
 
     /**
