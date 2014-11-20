@@ -1,6 +1,8 @@
 package com.learn2crack;
 
 /**
+ * Edited By Megan Matiz
+ * 
  * Author :Raj Amal
  * Email  :raj.amalw@learn2crack.com
  * Website:www.learn2crack.com
@@ -31,16 +33,19 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+//Login Activity allows users to login
 public class Login extends Activity {
+	//Important Stuff that you need to login
     Button btnLogin;
     Button Btnregister;
     Button passreset;
     EditText inputEmail;
     EditText inputPassword;
+    
+    //holds error messages
     private TextView loginErrorMsg;
-    /**
-     * Called when the activity is first created.
-     */
+
+    //keys to get data from database -> this data is about the user. user data.
     private static String KEY_SUCCESS = "success";
     private static String KEY_UID = "uid";
     private static String KEY_USERNAME = "uname";
@@ -50,18 +55,20 @@ public class Login extends Activity {
     private static String KEY_EMAIL = "email";
     private static String KEY_CREATED_AT = "created_at";
     
-     //disable back button
+     //disable back button NO YOU CAN NOT USE THIS
     @Override
     public void onBackPressed() {
     }
 
-
+    //Do this stuff!
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //use the activity_login XML file. and none other.
         setContentView(R.layout.activity_login);
 
+        //that stuff that i said was important.. using ids to connect them to the xml
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.pword);
         Btnregister = (Button) findViewById(R.id.registerbtn);
@@ -69,14 +76,16 @@ public class Login extends Activity {
         passreset = (Button)findViewById(R.id.passres);
         loginErrorMsg = (TextView) findViewById(R.id.loginErrorMsg);
 
+        //BUTTONS!!
+        //Press this button to reset password -> will send email with temporary password
         passreset.setOnClickListener(new View.OnClickListener() {
         public void onClick(View view) {
-        Intent myIntent = new Intent(view.getContext(), PasswordReset.class);
-        startActivityForResult(myIntent, 0);
-        finish();
+        	Intent myIntent = new Intent(view.getContext(), PasswordReset.class);
+        	startActivityForResult(myIntent, 0);
+        	finish();
         }});
 
-
+        //Press this button to go to the register activity because you don't have an account yet
         Btnregister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), Register.class);
@@ -84,17 +93,15 @@ public class Login extends Activity {
                 finish();
              }});
 
-/**
- * Login button click event
- * A Toast is set to alert when the Email and Password field is empty
- **/
+        //This is the important button because it allows you to actually login
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
 
+            	//check the fields
                 if (  ( !inputEmail.getText().toString().equals("")) && ( !inputPassword.getText().toString().equals("")) )
                 {
-                    NetAsync(view);
+                    NetAsync(view); //go check the internet
                 }
                 else if ( ( !inputEmail.getText().toString().equals("")) )
                 {
@@ -115,11 +122,7 @@ public class Login extends Activity {
         });
     }
 
-
-/**
- * Async Task to check whether internet connection is working.
- **/
-
+    //check that you are connected to the internet
     private class NetCheck extends AsyncTask<String,String,Boolean>
     {
         private ProgressDialog nDialog;
@@ -139,8 +142,6 @@ public class Login extends Activity {
         **/
         @Override
         protected Boolean doInBackground(String... args){
-
-
 
             ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
@@ -179,7 +180,7 @@ public class Login extends Activity {
     }
 
     /**
-     * Async Task to get and send data to My Sql database through JSON respone.
+     * Async Task to get and send data to My Sql database through JSON response.
      **/
     private class ProcessLogin extends AsyncTask<String, String, JSONObject> {
 
@@ -191,11 +192,14 @@ public class Login extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+            
+            //get the text from the user and put it into variables we can use to login
             inputEmail = (EditText) findViewById(R.id.email);
             inputPassword = (EditText) findViewById(R.id.pword);
             email = inputEmail.getText().toString();
             password = inputPassword.getText().toString();
+            
+            //dialog for the user
             pDialog = new ProgressDialog(Login.this);
             pDialog.setTitle("Contacting Servers");
             pDialog.setMessage("Logging in ...");
@@ -207,6 +211,7 @@ public class Login extends Activity {
         @Override
         protected JSONObject doInBackground(String... args) {
 
+        	//use the email and password entered by the user to attempt to login
             UserFunctions userFunction = new UserFunctions();
             JSONObject json = userFunction.loginUser(email, password);
             return json;
@@ -226,7 +231,7 @@ public class Login extends Activity {
                         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                         JSONObject json_user = json.getJSONObject("user");
                         
-                        //Saves the uid in sharedpref so that other classes can use it as well. 
+                       //Saves the uid in sharedpref so that other classes can use it as well. 
                        SharedPreferences prefs = Login.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
                  	   String saveduid = "com.example.app.uid";
                  	   SharedPreferences.Editor editor = prefs.edit();
