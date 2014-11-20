@@ -21,11 +21,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Search_Games extends Activity  {
+	EditText SearchInput;
+	Button SearchButton;
 	TextView Games;
 	Button createGame;
 	
 	private static String KEY_SUCCESS = "success";
-	private static String KEY_ZIPCODE = "uzip";
+	private static String KEY_ZIPCODE = "zipcode";
 	
 	public boolean onCreateOptionsMenu(Menu menu) {
         /* Inflate the menu; this adds items to the action bar if it is present.
@@ -83,11 +85,10 @@ public class Search_Games extends Activity  {
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_games);
+		SearchButton = (Button) findViewById(R.id.searchButton);
+		SearchInput = (EditText) findViewById(R.id.searchLoc);
 		Games = (TextView) findViewById(R.id.localGames);
 		createGame = (Button) findViewById(R.id.create_game);
-		
-		new GetGameData().execute();
-		
 		
 		createGame.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -96,14 +97,26 @@ public class Search_Games extends Activity  {
 				
 		});
 		
+		SearchButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if(!SearchInput.getText().toString().equals(""))
+				{
+					Games.setText("");
+					new GetGameData().execute();
+				}
+				else if(!SearchInput.getText().toString().equals(""))
+				{
+					Toast.makeText(getApplicationContext(),
+                            "Search Field is empty", Toast.LENGTH_SHORT).show();
+				}
+				
+                }
+				
+		});
+		
 	}
 	private class GetGameData extends AsyncTask<String, String, JSONObject> {
 		
-		
-		SharedPreferences prefs = Search_Games.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
-  	    String saveduid = "com.example.app.uid";
-  	    String uid = prefs.getString(saveduid, "none");
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -112,8 +125,9 @@ public class Search_Games extends Activity  {
         @Override
         protected JSONObject doInBackground(String... args) {
 
+        	String location = SearchInput.getText().toString();
         	UserFunctions userFunction = new UserFunctions();
-            JSONObject json = userFunction.getUserData(uid);
+            JSONObject json = userFunction.getGameData(location);
             return json;
         }
 
@@ -122,19 +136,17 @@ public class Search_Games extends Activity  {
             try {
                if (json.getString(KEY_SUCCESS) != null) {
 
+            	   String res = json.getString(KEY_SUCCESS);
 
-                    JSONObject json_user = json.getJSONObject("Games");
-        			Games.setText(json_user.getString(KEY_ZIPCODE));
-        			if(uid == "none"){
-        				Games.setText("No Games Found");
-        			}
-        			
-                    }
-               else{
-
-                    }
+                    JSONObject json_user = json.getJSONObject("Game");
+                    Games.append(json_user.getString("gname"));
                 
-            } catch (JSONException e) {
+            }
+               else
+               {
+            	   Games.setText("No Games Found");
+               }
+               } catch (JSONException e) {
                 e.printStackTrace();
             }
        }
