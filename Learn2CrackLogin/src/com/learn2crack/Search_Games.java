@@ -72,7 +72,7 @@ public class Search_Games extends Activity  {
     }
 	
 	public void openLogout() {
-		Intent intent = new Intent(this, Login.class);
+		Intent intent = new Intent(this, gameDisplay.class);
 		startActivity(intent);
 	}
 	
@@ -92,8 +92,8 @@ public class Search_Games extends Activity  {
         
         // create the layout params that will be used to define how your
         // button will be displayed
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+           //     LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
          
 		
 		SearchInput = (EditText) findViewById(R.id.searchLoc);
@@ -144,8 +144,6 @@ public class Search_Games extends Activity  {
 	
 	private class GetGameData extends AsyncTask<String, String, JSONObject> {
 		//some variables
-	 	SharedPreferences prefs = Search_Games.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
-	 	String savedGame = "com.example.app.gid";
   	    String gid = SearchInput.getText().toString();
 
   	    LinearLayout a = new LinearLayout(Search_Games.this);

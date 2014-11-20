@@ -26,7 +26,7 @@ public class gameDisplay extends Activity  {
 	
 	private static String KEY_SUCCESS = "success";
 	private static String KEY_GAMENAME = "gName";
-	private static String KEY_ZIPCODE = "location";
+	//private static String KEY_ZIPCODE = "location";
 	private static String KEY_START_TIME = "starttime";
 	private static String KEY_END_TIME = "endtime";
 	
@@ -97,13 +97,13 @@ public class gameDisplay extends Activity  {
 			Tasks.append(AllTasks[i]);
 			Tasks.append("\n");
 		}
-		new GetUserData().execute();		
+		new GetGameData().execute();		
 	}
-	private class GetUserData extends AsyncTask<String, String, JSONObject> {
+	private class GetGameData extends AsyncTask<String, String, JSONObject> {
 		
 		SharedPreferences prefs = gameDisplay.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
-  	    String saveduid = "com.example.app.uid";
-  	    String uid = prefs.getString(saveduid, "none");
+  	    String savedgid = "com.example.app.gid";
+  	    String gid = prefs.getString(savedgid, "none");
 
         @Override
         protected void onPreExecute() {
@@ -114,7 +114,7 @@ public class gameDisplay extends Activity  {
         protected JSONObject doInBackground(String... args) {
 
         	UserFunctions userFunction = new UserFunctions();
-            JSONObject json = userFunction.getUserData(uid);
+            JSONObject json = userFunction.getGameDataGid(gid);
             return json;
         }
 
@@ -126,7 +126,7 @@ public class gameDisplay extends Activity  {
 
                     JSONObject json_user = json.getJSONObject("Game");
         			GameName.setText(json_user.getString(KEY_GAMENAME));
-        			Zipcode.setText(json_user.getString(KEY_ZIPCODE));
+        			//Zipcode.setText(json_user.getString(KEY_ZIPCODE));
         			StartTime.setText(json_user.getString(KEY_START_TIME));
         			EndTime.setText(json_user.getString(KEY_END_TIME));
                     }
