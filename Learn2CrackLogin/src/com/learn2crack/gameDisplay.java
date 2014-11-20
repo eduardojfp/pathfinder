@@ -134,7 +134,7 @@ public class gameDisplay extends Activity  {
 
                     JSONObject json_user = json.getJSONObject("Game");
         			GameName.setText(json_user.getString(KEY_GAMENAME));
-        			//Zipcode.setText(json_user.getString(KEY_ZIPCODE));
+        			Zipcode.setText(json_user.getString(KEY_ZIPCODE));
         			StartTime.setText(json_user.getString(KEY_START_TIME));
         			EndTime.setText(json_user.getString(KEY_END_TIME));
                     }
