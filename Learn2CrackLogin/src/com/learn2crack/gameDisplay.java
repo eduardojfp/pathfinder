@@ -1,5 +1,9 @@
 package com.learn2crack;
+/*
+ * Author: Megan Matiz
+ */
 
+//Import this stuff
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,7 +22,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Button;
 
+/*
+ * This class will display information for a single game
+ * (game name, location, start and end times, etc)
+ * Get to this activity by selecting a game
+ */
 public class gameDisplay extends Activity  {
+	//names for stuff on the view -> used later
 	TextView GameName;
 	TextView Zipcode;
 	TextView StartTime;
@@ -26,26 +36,22 @@ public class gameDisplay extends Activity  {
 	Button ViewTasks;
 	Button JoinGame;
 	
+	//keys for accessing information from the database
 	private static String KEY_SUCCESS = "success";
 	private static String KEY_GAMENAME = "gname";
 	private static String KEY_ZIPCODE = "location";
 	private static String KEY_START_TIME = "starttime";
 	private static String KEY_END_TIME = "endtime";
 	
+	//This is for the menu, press the menu key on your phone to see the menu
 	public boolean onCreateOptionsMenu(Menu menu) {
-        /* Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-        */
-    	// Inflate the menu items for use in the action bar
     	MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);  
     }
+	
+	//These are the options for the menu
 	public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         switch(item.getItemId()) {
 	        case R.id.action_search:
 	            openSearch();
@@ -67,6 +73,7 @@ public class gameDisplay extends Activity  {
         }
     }
 	
+	//The are the functions for the actions for the menu
 	public void createGame() {
     	Intent intent = new Intent(this, CreateGameActivity.class);
     	startActivity(intent);
@@ -83,9 +90,15 @@ public class gameDisplay extends Activity  {
 		Intent intent = new Intent(this, Login.class);
 		startActivity(intent);
 	}
+	
+	//Do this stuff
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//This says which XML file to use
 		setContentView(R.layout.game_display);
+		
+		//Here's that stuff I said that I would use later.. attaching them to the ids in the XML file
 		GameName = (TextView) findViewById(R.id.gameName);
 		Zipcode = (TextView) findViewById(R.id.localGames);
 		StartTime = (TextView) findViewById(R.id.startTime);
@@ -93,22 +106,28 @@ public class gameDisplay extends Activity  {
 		ViewTasks = (Button) findViewById(R.id.viewTasksButton);
 		JoinGame = (Button) findViewById(R.id.join_game);
 		
-		//buttons
+		//Buttons!
+		//Button that takes you to the tasks for the game
 		ViewTasks.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 					new GameTasks();
                 }	
 		});
+		//Button that lets you join the game
 		JoinGame.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 					//TODO: add player to game	
                 }	
 		});
-
+		
+		//Now actually get the game data!
 		new GetGameData().execute();		
 	}
+	
+	//Get the Game Data!
 	private class GetGameData extends AsyncTask<String, String, JSONObject> {
 		
+		//Get the gid that was saved when you clicked on the game -> gonna use this to find the info for the right game
 		SharedPreferences prefs = gameDisplay.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
   	    String savedgid = "com.example.app.gid";
   	    String gid = prefs.getString(savedgid, "none");
@@ -120,7 +139,8 @@ public class gameDisplay extends Activity  {
 
         @Override
         protected JSONObject doInBackground(String... args) {
-
+        	
+        	//Here's where I use that gid to get the info for the right game.. uses a function in UserFunctions.java
         	UserFunctions userFunction = new UserFunctions();
             JSONObject json = userFunction.getGameDataGid(gid);
             return json;
@@ -131,7 +151,7 @@ public class gameDisplay extends Activity  {
             try {
                if (json.getString(KEY_SUCCESS) != null) {
 
-
+            	   //Now set those views declared earlier to display the information we got from the database
                     JSONObject json_user = json.getJSONObject("Game");
         			GameName.setText(json_user.getString(KEY_GAMENAME));
         			Zipcode.setText(json_user.getString(KEY_ZIPCODE));
