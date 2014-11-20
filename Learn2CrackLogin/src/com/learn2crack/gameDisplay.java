@@ -27,8 +27,8 @@ public class gameDisplay extends Activity  {
 	private static String KEY_SUCCESS = "success";
 	private static String KEY_GAMENAME = "gName";
 	private static String KEY_ZIPCODE = "location";
-	private static String KEY_START_TIME = "sTime";
-	private static String KEY_END_TIME = "eTime";
+	private static String KEY_START_TIME = "starttime";
+	private static String KEY_END_TIME = "endtime";
 	
 	public boolean onCreateOptionsMenu(Menu menu) {
         /* Inflate the menu; this adds items to the action bar if it is present.
