@@ -34,7 +34,9 @@ public class UserFunctions {
     private static String chgpass_tag = "chgpass";
     private static String getUserData_tag = "getUserData";
     private static String setUserData_tag = "setUserData";
+    private static String getGameDataGid_tag = "getGameDataGid";
     private static String getGameData_tag = "getGameData";
+    private static String getGamesByUid_tag = "getGamesByUid";
 
 
     // constructor7y
@@ -150,10 +152,24 @@ public JSONObject getTaskData(String teamid, String gid){
     JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
 	return json;
 }   
-
+public JSONObject getGameDataGid(String gid){
+	List<NameValuePair> params = new ArrayList<NameValuePair>();
+	params.add(new BasicNameValuePair("tag", getGameDataGid_tag));
+	params.add(new BasicNameValuePair("gid", gid));
+    JSONObject json = jsonParser.getJSONFromUrl(getGameDataURL,params);
+	return json;
+}
 	/**
 	 * Function to get game data
 	 */
+public JSONObject getGamesByUid(String uid){
+	List<NameValuePair> params = new ArrayList<NameValuePair>();
+	params.add(new BasicNameValuePair("tag", getGamesByUid_tag));
+	params.add(new BasicNameValuePair("uid", uid));
+    JSONObject json = jsonParser.getJSONFromUrl(getGameDataURL,params);
+	return json;
+	
+}
 public JSONObject getGameData(String uzip){
 	List<NameValuePair> params = new ArrayList<NameValuePair>();
 	params.add(new BasicNameValuePair("tag", getGameData_tag));

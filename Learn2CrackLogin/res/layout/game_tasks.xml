@@ -5,6 +5,32 @@
     <LinearLayout android:id="@+id/linear"
         android:orientation="vertical" 
         android:layout_width="fill_parent" android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/gameName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Game Name" />
+
+
+    <TextView
+        android:id="@+id/endTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="End Time" />
+
+    <TextView
+        android:id="@+id/startTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Start Time" />
+    <View
+    	android:layout_width="fill_parent"
+    	android:layout_height="1dp"
+    	android:background="#FF0000FF" 
+    />
 <!--  
     <TextView
         android:id="@+id/teamName"
