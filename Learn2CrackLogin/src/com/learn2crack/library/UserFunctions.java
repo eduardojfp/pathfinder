@@ -24,6 +24,8 @@ public class UserFunctions {
     private static String forpassURL = "http://team-pathfinder.tk/a4794025_DB/";
     private static String chgpassURL = "http://team-pathfinder.tk/a4794025_DB/";
     private static String getGameDataURL = "http://team-pathfinder.tk/a4794025_DB/";
+    private static String getTaskData_tag = "getTaskData";
+    private static String findTeamData_tag = "findTeamData";
 
 
     private static String login_tag = "login";
@@ -130,7 +132,24 @@ public JSONObject setUserData(String uid, String username, String about, String 
         JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
     	return json;
     }
-    
+public JSONObject findTeamData(String uuid, String gid){
+	
+	List<NameValuePair> params = new ArrayList<NameValuePair>();
+	params.add(new BasicNameValuePair("tag", findTeamData_tag));
+	params.add(new BasicNameValuePair("uuid", uuid));
+	params.add(new BasicNameValuePair("gid", gid));
+    JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
+	return json;
+} 
+public JSONObject getTaskData(String teamid, String gid){
+	
+	List<NameValuePair> params = new ArrayList<NameValuePair>();
+	params.add(new BasicNameValuePair("tag", getTaskData_tag));
+	params.add(new BasicNameValuePair("teamid", teamid));
+	params.add(new BasicNameValuePair("gid", gid));
+    JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
+	return json;
+}   
 
 	/**
 	 * Function to get game data
