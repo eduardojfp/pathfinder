@@ -11,12 +11,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class GameTasks extends Activity  { 
+	private static final int PICK_IMAGE = 0;
 	LinearLayout lm;
 	TextView GameName;
 	TextView Zipcode;
@@ -59,6 +63,34 @@ public class GameTasks extends Activity  {
 	        
 	        
 	 }
+	 
+	 OnClickListener btnClickListener = new OnClickListener() {
+			@Override
+		    public void onClick(View v) { //click on game will take you to the game
+				Intent intent = new Intent();
+				intent.setType("image/*");
+				intent.setAction(Intent.ACTION_GET_CONTENT);
+				startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+				
+			    
+				
+			}
+		};
+		@Override
+		protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		    if(requestCode == PICK_IMAGE && data != null && data.getData() != null) {
+		        Uri _uri = data.getData();
+
+		        //User had pick an image.
+		        Cursor cursor = getContentResolver().query(_uri, new String[] { android.provider.MediaStore.Images.ImageColumns.DATA }, null, null, null);
+		        cursor.moveToFirst();
+
+		        //Link to the image
+		        final String imageFilePath = cursor.getString(0);
+		        cursor.close();
+		    }
+		    super.onActivityResult(requestCode, resultCode, data);
+		}
 	 ///get Game data
 	 private class getGameDataGid extends AsyncTask<String, String, JSONObject> {//go into database and get game data base gid
 			
@@ -181,13 +213,7 @@ public class GameTasks extends Activity  {
 	  	    String savegid = "com.example.app.gid";
 	  	    String gid = prefs2.getString(savegid, "none");
 
-	  	    //dynaimic layout to add
-	  	    LinearLayout name = new LinearLayout(GameTasks.this);
-
-	  	    LinearLayout description = new LinearLayout(GameTasks.this);
-
-	  	    LinearLayout score = new LinearLayout(GameTasks.this);
-	  	    LinearLayout imagesend = new LinearLayout(GameTasks.this);
+	  	    
 
 			@Override
 	        protected void onPreExecute() {
@@ -204,48 +230,65 @@ public class GameTasks extends Activity  {
 
 	        @Override
 	        protected void onPostExecute(JSONObject json) {
+	        	
 	        	try {
 	        		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( //set params
 	    	                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 	        		//in multiple objects
+	        		int i = 0;
+	        		
 		        	JSONObject json_user = json.getJSONObject("task"); 
 		        	
-		        	
-		        	JSONObject obj	= json_user.getJSONObject("array0");
-		        	
-		        	JSONObject obj2 = (obj.getJSONObject("data"));
-		        	//set the text based off of data found
-		        	TextView taskName = new TextView(GameTasks.this);
-		        	taskName.setText(obj2.getString("tname"));
-		        	name.addView(taskName);
-		        	
-		        	TextView taskDescription = new TextView(GameTasks.this);
-		        	taskDescription.setText("Task Description: " + obj2.getString("tdescription"));
-		        	description.addView(taskDescription );
-		        	
-		        	TextView taskScore = new TextView(GameTasks.this);
-		        	taskScore.setText(obj2.getString("score"));
-		        	score.addView(taskScore);
-		        	if(obj2.getString("complete").equals("0")){ //if task not complete add a send and image button
-		        		ImageButton image = new ImageButton(GameTasks.this);
-		        		image.setBackgroundResource(R.drawable.picture_icon);
-		        		image.setId(obj2.getInt("tid")); //set id to be value of taskid
-		        		imagesend.addView(image);
-		        		
-		        		Button send = new Button(GameTasks.this);
-		        		send.setText("Send");
-		        		send.setId(obj2.getInt("tid")); //set id to be value of taskid
-		        		imagesend.addView(send);
-		        		
-		        	}
+
+	        		while(json_user.has("array" + Integer.toString(i))){
+	        			//dynaimic layout to add
+	        	  	    LinearLayout name = new LinearLayout(GameTasks.this);
+
+	        	  	    LinearLayout description = new LinearLayout(GameTasks.this);
+
+	        	  	    LinearLayout score = new LinearLayout(GameTasks.this);
+	        	  	    LinearLayout imagesend = new LinearLayout(GameTasks.this);
+	        			
+			        	JSONObject obj	= json_user.getJSONObject("array" + Integer.toString(i));
+			        	
+			        	JSONObject obj2 = (obj.getJSONObject("data"));
+			        	//set the text based off of data found
+			        	TextView taskName = new TextView(GameTasks.this);
+			        	taskName.setText(obj2.getString("tname"));
+			        	name.addView(taskName);
+			        	
+			        	TextView taskDescription = new TextView(GameTasks.this);
+			        	taskDescription.setText("Task Description: " + obj2.getString("tdescription"));
+			        	description.addView(taskDescription );
+			        	
+			        	TextView taskScore = new TextView(GameTasks.this);
+			        	taskScore.setText(obj2.getString("score"));
+			        	score.addView(taskScore);
+			        	if(obj2.getString("complete").equals("0")){ //if task not complete add a send and image button
+			        		ImageButton image = new ImageButton(GameTasks.this);
+			        		image.setBackgroundResource(R.drawable.picture_icon);
+	
+							image.setOnClickListener(btnClickListener); //add a listener
+			        		image.setTag(obj2.getInt("tid")); //set id to be value of taskid
+			        		imagesend.addView(image);
+			        		
+			        		Button send = new Button(GameTasks.this);
+			        		send.setText("Send");
+			        		send.setId(obj2.getInt("tid")); //set id to be value of taskid
+			        		imagesend.addView(send);
+			        		
+			        	}
+		        		i++;
+
+			        	//add layout
+			        	lm.addView(name); 
+			        	lm.addView(description); 
+			        	lm.addView(score); 
+			        	lm.addView(imagesend); 
+	        		}
 	            } catch (JSONException e) {
 	                e.printStackTrace();
 	            }
-	        //add layout
-             lm.addView(name); 
-             lm.addView(description); 
-             lm.addView(score); 
-             lm.addView(imagesend); 
 	        }
 			
 		}
