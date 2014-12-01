@@ -35,6 +35,55 @@ public class GameTasks extends Activity  {
 	TextView StartTime;
 	TextView EndTime;
 	
+	//This is for the menu, press the menu key on your phone to see the menu
+			public boolean onCreateOptionsMenu(Menu menu) {
+		    	MenuInflater inflater = getMenuInflater();
+		        inflater.inflate(R.menu.main_activity_actions, menu);
+		        return super.onCreateOptionsMenu(menu);  
+		    }
+			
+			//These are the options for the menu
+			public boolean onOptionsItemSelected(MenuItem item) {
+		        switch(item.getItemId()) {
+			        case R.id.action_search:
+			            openSearch();
+			            return true;
+			        case R.id.action_create:
+			        	createGame();
+			        	return true;
+			        case R.id.action_settings:
+			            //openSettings();
+			            return true;
+			        case R.id.action_profile:
+			            openProfile();
+			            return true;
+			        case R.id.action_logout:
+			        	openLogout();
+			        	return true;
+			        default:
+			        	return super.onOptionsItemSelected(item);
+		        }
+		    }
+			
+			//The are the functions for the actions for the menu
+			public void createGame() {
+		    	Intent intent = new Intent(this, CreateGameActivity.class);
+		    	startActivity(intent);
+		    }
+			public void openSearch() {
+		    	Intent intent = new Intent(this, Search_Games.class);
+		    	startActivity(intent);
+		    }
+			public void openProfile(){
+				Intent intent = new Intent(this, Profile.class);
+		    	startActivity(intent);
+			}
+			public void openLogout() {
+				Intent intent = new Intent(this, Login.class);
+				startActivity(intent);
+			}
+			
+	
 	private static String KEY_SUCCESS = "success";
 
 	 protected void onCreate(Bundle savedInstanceState) {
