@@ -111,9 +111,9 @@ public class JoinGame extends Activity {
 		private class GetGameData extends AsyncTask<String, String, JSONObject> {
 			
 			//Get the gid that was saved when you clicked on the game -> gonna use this to find the info for the right game
-			SharedPreferences prefs = JoinGame.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
+			SharedPreferences prefs2 = JoinGame.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
 	  	    String savedgid = "com.example.app.gid";
-	  	    String gid = prefs.getString(savedgid, "none");
+	  	    String gid = prefs2.getString(savedgid, "none");
 
 	        @Override
 	        protected void onPreExecute() {

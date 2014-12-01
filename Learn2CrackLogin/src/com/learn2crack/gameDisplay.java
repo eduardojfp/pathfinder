@@ -212,30 +212,9 @@ public class gameDisplay extends Activity  {
         }
        @Override
         protected void onPostExecute(JSONObject json) {
-       /**
-        * Checks for success message.
-        **/
-                try {
-                    if (json.getString(KEY_SUCCESS) != null) {
-                        ErrorMsg.setText("");
-                        String res = json.getString(KEY_SUCCESS);
-
-                        if(Integer.parseInt(res) == 1){
-
-                            ErrorMsg.setText("Successfully Joined");
-
-                              finish();
-                        }
-
-                            ErrorMsg.setText("Error occured while joining");
-                        }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-
 
                 }
-            }}
+            }
 
 
 }
