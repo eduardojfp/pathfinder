@@ -190,6 +190,7 @@ public class UserFunctions {
     	List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("tag", joinGID_tag));
 		params.add(new BasicNameValuePair("uid", uid));
+		params.add(new BasicNameValuePair("gid", gid));
 	    JSONObject json = jsonParser.getJSONFromUrl(joinGIDURL,params);
 		return json;
     }

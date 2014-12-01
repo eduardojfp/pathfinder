@@ -97,16 +97,7 @@ public class JoinGame extends Activity {
 			//Back Button
 			backButton.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					//Get the gid that was saved when you clicked on the game -> gonna use this to find the info for the right game
-					SharedPreferences prefs = JoinGame.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
-			  	    String savedgid = "com.example.app.gid";
-			  	    String gid = prefs.getString(savedgid, "none");
-			  	    
-			  	    //save the gid
-			  	    String savegid = "com.example.app.gid";
-					SharedPreferences.Editor editor = prefs.edit();
-					editor.putString(savegid, gid);
-					editor.commit();
+	
 					Intent intent = new Intent(JoinGame.this, gameDisplay.class);
 			    	startActivity(intent);
 	                }	

@@ -4,25 +4,16 @@ package com.learn2crack;
  */
 
 //Import this stuff
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.learn2crack.library.DatabaseHandler;
 import com.learn2crack.library.UserFunctions;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -49,7 +40,6 @@ public class gameDisplay extends Activity  {
 	
 	//keys for accessing information from the database
 	private static String KEY_SUCCESS = "success";
-	private static String KEY_ERROR = "error";
 	private static String KEY_GAMENAME = "gname";
 	private static String KEY_ZIPCODE = "location";
 	private static String KEY_START_TIME = "starttime";
@@ -129,27 +119,19 @@ public class gameDisplay extends Activity  {
 		JoinGame.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				
-				//Get the gid that was saved when you clicked on the game -> gonna use this to find the info for the right game
-				SharedPreferences prefs = gameDisplay.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
-		  	    String savedgid = "com.example.app.gid";
-		  	    String gid = prefs.getString(savedgid, "none");
-		  	    
 		  	    //do the stuff to join the user to the game
-		  	    NetAsync(v);
+		  	    new ProcessJoin().execute();
 		  	    
-		  	    //save the gid
-		  	    String savegid = "com.example.app.gid";
-				SharedPreferences.Editor editor = prefs.edit();
-				editor.putString(savegid, gid);
-				editor.commit();
 				//go to the success page
 				Intent intent = new Intent(gameDisplay.this, JoinGame.class);
 		    	startActivity(intent);
+		    	
             }	
 		});
 		
 		//Now actually get the game data!
-		new GetGameData().execute();		
+		new GetGameData().execute();
+		
 	}
 	
 	//Get the Game Data!
@@ -198,96 +180,27 @@ public class gameDisplay extends Activity  {
 		
 	}
 
-	private class NetCheck extends AsyncTask<String,String,Boolean>
-    {
-        private ProgressDialog nDialog;
-
-        @Override
-        protected void onPreExecute(){
-            super.onPreExecute();
-            nDialog = new ProgressDialog(gameDisplay.this);
-            nDialog.setMessage("Loading..");
-            nDialog.setTitle("Checking Network");
-            nDialog.setIndeterminate(false);
-            nDialog.setCancelable(true);
-            nDialog.show();
-        }
-
-        @Override
-        protected Boolean doInBackground(String... args){
-
-
-/**
- * Gets current device state and checks for working internet connection by trying Google.
- **/
-            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo netInfo = cm.getActiveNetworkInfo();
-            if (netInfo != null && netInfo.isConnected()) {
-                try {
-                    URL url = new URL("http://www.google.com");
-                    HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
-                    urlc.setConnectTimeout(3000);
-                    urlc.connect();
-                    if (urlc.getResponseCode() == 200) {
-                        return true;
-                    }
-                } catch (MalformedURLException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-            return false;
-
-        }
-        @Override
-        protected void onPostExecute(Boolean th){
-
-            if(th == true){
-                nDialog.dismiss();
-                new ProcessRegister().execute();
-            }
-            else{
-                nDialog.dismiss();
-                ErrorMsg.setText("Error in Network Connection");
-            }
-        }
-    }
-
-    private class ProcessRegister extends AsyncTask<String, String, JSONObject> {
-
-/**
- * Defining Process dialog
- **/
-        private ProgressDialog pDialog;
+	
+    private class ProcessJoin extends AsyncTask<String, String, JSONObject> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            
-            pDialog = new ProgressDialog(gameDisplay.this);
-            pDialog.setTitle("Contacting Servers");
-            pDialog.setMessage("Joining ...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
         }
 
         @Override
         protected JSONObject doInBackground(String... args) {
         	
     	//get uid
-        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-        HashMap<String,String> user = new HashMap<String, String>();
-        user = db.getUserDetails();
-        String uid = (user.get("uid"));
+        	SharedPreferences prefs = gameDisplay.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
+      	    String saveduid = "com.example.app.uid";
+      	    String uid = prefs.getString(saveduid, "none");
+        
         
         //get gid
-        SharedPreferences prefs = gameDisplay.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
+        SharedPreferences prefs2 = gameDisplay.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
   	    String savedgid = "com.example.app.gid";
-  	    String gid = prefs.getString(savedgid, "none");
+  	    String gid = prefs2.getString(savedgid, "none");
 
         UserFunctions userFunction = new UserFunctions();
         JSONObject json = userFunction.joinGID(uid, gid);
@@ -308,8 +221,6 @@ public class gameDisplay extends Activity  {
                         String res = json.getString(KEY_SUCCESS);
 
                         if(Integer.parseInt(res) == 1){
-                            pDialog.setTitle("Getting Data");
-                            pDialog.setMessage("Loading Info");
 
                             ErrorMsg.setText("Successfully Joined");
 
@@ -325,10 +236,6 @@ public class gameDisplay extends Activity  {
 
                 }
             }}
-        public void NetAsync(View view){
-            new NetCheck().execute();
-        }
-
 
 
 }
