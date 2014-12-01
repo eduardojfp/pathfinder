@@ -4,15 +4,16 @@ package com.learn2crack;
  */
 
 //Import this stuff
+
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.learn2crack.library.UserFunctions;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -33,6 +34,7 @@ public class gameDisplay extends Activity  {
 	TextView Zipcode;
 	TextView StartTime;
 	TextView EndTime;
+	TextView ErrorMsg;
 	Button ViewTasks;
 	Button JoinGame;
 	
@@ -110,18 +112,27 @@ public class gameDisplay extends Activity  {
 		//Button that takes you to the tasks for the game
 		ViewTasks.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-					new GameTasks();
+				Intent intent = new Intent(gameDisplay.this, GameTasks.class);
+		    	startActivity(intent);
                 }	
 		});
 		//Button that lets you join the game
 		JoinGame.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-					//TODO: add player to game	
-                }	
+				
+		  	    //do the stuff to join the user to the game
+		  	    new ProcessJoin().execute();
+		  	    
+				//go to the success page
+				Intent intent = new Intent(gameDisplay.this, JoinGame.class);
+		    	startActivity(intent);
+		    	
+            }	
 		});
 		
 		//Now actually get the game data!
-		new GetGameData().execute();		
+		new GetGameData().execute();
+		
 	}
 	
 	//Get the Game Data!
@@ -131,7 +142,7 @@ public class gameDisplay extends Activity  {
 		SharedPreferences prefs = gameDisplay.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
   	    String savedgid = "com.example.app.gid";
   	    String gid = prefs.getString(savedgid, "none");
-
+		
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -169,4 +180,42 @@ public class gameDisplay extends Activity  {
 		
 		
 	}
+
+	
+    private class ProcessJoin extends AsyncTask<String, String, JSONObject> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... args) {
+        	
+    	//get uid
+        	SharedPreferences prefs = gameDisplay.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
+      	    String saveduid = "com.example.app.uid";
+      	    String uid = prefs.getString(saveduid, "none");
+        
+        
+        //get gid
+        SharedPreferences prefs2 = gameDisplay.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
+  	    String savedgid = "com.example.app.gid";
+  	    String gid = prefs2.getString(savedgid, "none");
+
+        UserFunctions userFunction = new UserFunctions();
+        JSONObject json = userFunction.joinGID(uid, gid);
+
+        return json;
+            
+
+
+        }
+       @Override
+        protected void onPostExecute(JSONObject json) {
+
+                }
+            }
+
+
 }

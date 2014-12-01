@@ -45,6 +45,8 @@
         <activity android:name="Search_Games"></activity>
         <activity android:name="GameTasks"></activity>
         <activity android:name="gameDisplay"></activity>
+        <activity android:name="JoinGame"></activity>
+        
 
 
 

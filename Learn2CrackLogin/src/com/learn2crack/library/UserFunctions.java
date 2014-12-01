@@ -26,11 +26,10 @@ public class UserFunctions {
     private static String forpassURL = "http://team-pathfinder.tk/a4794025_DB/";
     private static String chgpassURL = "http://team-pathfinder.tk/a4794025_DB/";
     private static String getGameDataURL = "http://team-pathfinder.tk/a4794025_DB/";
+    private static String joinGIDURL = "http://team-pathfinder.tk/a4794025_DB/";
     
     private static String getTaskData_tag = "getTaskData";
     private static String findTeamData_tag = "findTeamData";
-
-
     private static String login_tag = "login";
     private static String register_tag = "register";
     private static String forpass_tag = "forpass";
@@ -40,6 +39,7 @@ public class UserFunctions {
     private static String getGameDataGid_tag = "getGameDataGid";
     private static String getGameData_tag = "getGameData";
     private static String getGamesByUid_tag = "getGamesByUid";
+    private static String joinGID_tag = "joinGID";
 
 
     // constructor7y
@@ -75,10 +75,6 @@ public class UserFunctions {
         return json;
     }
 
-
-
-
-
     /**
      * Function to reset the password
      **/
@@ -97,11 +93,6 @@ public class UserFunctions {
         return json;
     }
 
-
-
-
-
-
      /**
       * Function to  Register
       **/
@@ -118,6 +109,7 @@ public class UserFunctions {
         JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
         return json;
     }
+    
     /**
      * Function to get User Data
      **/
@@ -129,6 +121,7 @@ public class UserFunctions {
         JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
     	return json;
     }
+    
     /**
      * Function set user data
      **/
@@ -188,6 +181,20 @@ public class UserFunctions {
 		return json;
 		
 	}
+	  
+	/*
+     * Function to join a game
+     */
+
+    public JSONObject joinGID(String uid, String gid){
+    	List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("tag", joinGID_tag));
+		params.add(new BasicNameValuePair("uid", uid));
+		params.add(new BasicNameValuePair("gid", gid));
+	    JSONObject json = jsonParser.getJSONFromUrl(joinGIDURL,params);
+		return json;
+    }
+    
 	/**
      * Function get game data by zipcode
      **/
@@ -209,6 +216,6 @@ public class UserFunctions {
         db.resetTables();
         return true;
     }
-
+    
 }
 
