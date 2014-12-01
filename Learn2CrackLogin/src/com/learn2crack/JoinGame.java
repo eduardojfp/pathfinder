@@ -27,6 +27,7 @@ public class JoinGame extends Activity {
 	//names for stuff on the view -> used later
 		TextView gameJoined;
 		Button backButton;
+		Button profile;
 		
 		//keys for accessing information from the database
 		private static String KEY_SUCCESS = "success";
@@ -93,12 +94,21 @@ public class JoinGame extends Activity {
 			*/
 			gameJoined = (TextView) findViewById(R.id.gameJoined);
 			backButton = (Button) findViewById(R.id.backButton);
+			profile = (Button) findViewById(R.id.profile);
 			
 			//Back Button
 			backButton.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 	
 					Intent intent = new Intent(JoinGame.this, gameDisplay.class);
+			    	startActivity(intent);
+	                }	
+			});
+			//Profile Button
+			profile.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+	
+					Intent intent = new Intent(JoinGame.this, Profile.class);
 			    	startActivity(intent);
 	                }	
 			});
