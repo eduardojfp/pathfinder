@@ -37,6 +37,7 @@ public class gameDisplay extends Activity  {
 	TextView ErrorMsg;
 	Button ViewTasks;
 	Button JoinGame;
+	Button buttonBack;
 	
 	//keys for accessing information from the database
 	private static String KEY_SUCCESS = "success";
@@ -107,6 +108,7 @@ public class gameDisplay extends Activity  {
 		EndTime = (TextView) findViewById(R.id.endTime);
 		ViewTasks = (Button) findViewById(R.id.viewTasksButton);
 		JoinGame = (Button) findViewById(R.id.join_game);
+		buttonBack = (Button) findViewById(R.id.buttonBack);
 		
 		//Buttons!
 		//Button that takes you to the tasks for the game
@@ -125,6 +127,17 @@ public class gameDisplay extends Activity  {
 		  	    
 				//go to the success page
 				Intent intent = new Intent(gameDisplay.this, JoinGame.class);
+		    	startActivity(intent);
+		    	
+            }	
+		});
+		
+		//Back to search games
+		buttonBack.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+
+				//go to the success page
+				Intent intent = new Intent(gameDisplay.this, Search_Games.class);
 		    	startActivity(intent);
 		    	
             }	
