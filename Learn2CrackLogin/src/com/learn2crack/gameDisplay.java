@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +29,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
 
@@ -263,23 +263,13 @@ public class gameDisplay extends Activity  {
  **/
         private ProgressDialog pDialog;
 
-        String email,password,fname,lname,uname,uzip;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*
-            inputUsername = (EditText) findViewById(R.id.uname);
-            inputPassword = (EditText) findViewById(R.id.pword);
-               fname = inputFirstName.getText().toString();
-               lname = inputLastName.getText().toString();
-                email = inputEmail.getText().toString();
-                uname= inputUsername.getText().toString();
-                uzip = inputZipcode.getText().toString();
-                password = inputPassword.getText().toString();
-                */
+            
             pDialog = new ProgressDialog(gameDisplay.this);
             pDialog.setTitle("Contacting Servers");
-            pDialog.setMessage("Registering ...");
+            pDialog.setMessage("Joining ...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -287,12 +277,23 @@ public class gameDisplay extends Activity  {
 
         @Override
         protected JSONObject doInBackground(String... args) {
-
+        	
+    	//get uid
+        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+        HashMap<String,String> user = new HashMap<String, String>();
+        user = db.getUserDetails();
+        String uid = (user.get("uid"));
+        
+        //get gid
+        SharedPreferences prefs = gameDisplay.this.getSharedPreferences("com.learn2crack", Context.MODE_PRIVATE);
+  	    String savedgid = "com.example.app.gid";
+  	    String gid = prefs.getString(savedgid, "none");
 
         UserFunctions userFunction = new UserFunctions();
-        JSONObject json = userFunction.registerUser(fname, lname, email, uname, uzip, password);
+        JSONObject json = userFunction.joinGID(uid, gid);
 
-            return json;
+        return json;
+            
 
 
         }
@@ -306,48 +307,16 @@ public class gameDisplay extends Activity  {
                         ErrorMsg.setText("");
                         String res = json.getString(KEY_SUCCESS);
 
-                        String red = json.getString(KEY_ERROR);
-
                         if(Integer.parseInt(res) == 1){
                             pDialog.setTitle("Getting Data");
                             pDialog.setMessage("Loading Info");
 
-                            ErrorMsg.setText("Successfully Registered");
+                            ErrorMsg.setText("Successfully Joined");
 
-
-                            DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-                            JSONObject json_user = json.getJSONObject("user");
-
-                            /**
-                             * Removes all the previous data in the SQlite database
-                             **/
-                            
-                            /*
-                             TODO: ADD userfunction for database stuff
-                            UserFunctions logout = new UserFunctions();
-                            logout.logoutUser(getApplicationContext());
-                            db.addUser(json_user.getString(KEY_FIRSTNAME),json_user.getString(KEY_LASTNAME),json_user.getString(KEY_EMAIL),json_user.getString(KEY_USERNAME),json_user.getString(KEY_ZIPCODE),json_user.getString(KEY_UID),json_user.getString(KEY_CREATED_AT));
-                            
-                            */
                               finish();
                         }
 
-                        else if (Integer.parseInt(red) ==2){
-                            pDialog.dismiss();
-                            ErrorMsg.setText("User already exists");
-                        }
-                        else if (Integer.parseInt(red) ==3){
-                            pDialog.dismiss();
-                            ErrorMsg.setText("Invalid Email id");
-                        }
-
-                    }
-
-
-                        else{
-                        pDialog.dismiss();
-
-                            ErrorMsg.setText("Error occured in registration");
+                            ErrorMsg.setText("Error occured while joining");
                         }
 
                 } catch (JSONException e) {
