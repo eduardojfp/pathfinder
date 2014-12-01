@@ -112,7 +112,8 @@ public class gameDisplay extends Activity  {
 		//Button that takes you to the tasks for the game
 		ViewTasks.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-					new GameTasks();
+				Intent intent = new Intent(gameDisplay.this, GameTasks.class);
+		    	startActivity(intent);
                 }	
 		});
 		//Button that lets you join the game
