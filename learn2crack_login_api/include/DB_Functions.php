@@ -54,6 +54,68 @@ return false;
 }
 
 }
+public function findTeamData($uuid, $gid) {
+        $result = mysql_query("SELECT teamid, score, teamname FROM teamusers WHERE gid = '$gid' && user_uniqueid = '$uuid'") or die(mysql_error());
+        $no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows > 0) {
+            $result = mysql_fetch_array($result);
+                return $result;
+        }else {
+            // team not found
+            return false;
+        }
+    }
+public function getTaskData($teamid, $gid) {
+        $result = mysql_query("SELECT * FROM task WHERE teamid = '$teamid' && gid = '$gid'") or die(mysql_error());
+        $no_of_rows = mysql_num_rows($result);
+        $rows = array();
+        if ($no_of_rows == 0) {
+             return false;
+        }
+        while ($r = mysql_fetch_array($result)) {
+              $rows[] = array('data' => $r);
+        }
+        return($rows);
+        //$sth = prepare("SELECT * FROM task WHERE teamid = '$teamid' && gid = '$gid'") or die(mysql_error());
+        //$sth->execute();
+        //$result = $sth->fetchall();
+        //return $result;
+}
+public function getGameDataGid($gid){
+        $result = mysql_query("SELECT Game.gid, Game.gname, Game.starttime, Game.endtime, Game.location FROM Game WHERE gid = '$gid'") or die(mysql_error());
+        $no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows > 0) {
+            $result = mysql_fetch_array($result);
+                 return $result;
+        } else {
+           // no games found
+           return false;
+        }
+}
+public function getGamesByUid($uuid){
+        $result = mysql_query("SELECT Game.gid, Game.gname FROM Game, teamusers WHERE user_uniqueid = '$uuid' && Game.gid = teamusers.gid") or die(mysql_error());
+        $no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows > 0) {
+            $result = mysql_fetch_array($result);
+                 return $result;
+        } else {
+           // no games found
+           return false;
+        }
+
+}
+public function getGameData($uzip) {
+        $result = mysql_query("SELECT gid, gname FROM Game WHERE location = '$uzip'") or die(mysql_error());
+        $no_of_rows = mysql_num_rows($result);
+        if ($no_of_rows > 0) {
+            $result = mysql_fetch_array($result);
+                 return $result;
+        } else {
+           // no games found
+           return false;
+        }
+}
+
 //added
 public function getUserData($uid){
   $result = mysql_query("SELECT username, created_at, About, contact FROM users WHERE unique_id = '$uid'") or die(mysql_error());
@@ -67,40 +129,44 @@ public function getUserData($uid){
     return false;
   }
 }
-public function setUserData($uniqueid, $username, $about, $contact){
-  $result = mysql_query("UPDATE users SET username = '$username', About = '$about', contact ='$contact' WHERE unique_id = '$uniqueid'");
-  
+public function joinGID($uid, $gid){
+  $result = mysql_query("INSERT INTO teamusers(user_uniqueid, gid, teamid, score, teamname) VALUES('$uid', '$gid', '1', '0', 'Team 1')") or die(mysql_error());
   if ($result) {
-    return true;
+    // get user details 
+            $uid = mysql_insert_id(); // last inserted id
+            $result = mysql_query("SELECT * FROM users WHERE uid = $uid");
+            // return user details
+            return mysql_fetch_array($result);
   }
   else{
     return false;
   }
 }
-
-public function getGameData($gid){
-  $result=mysql_query("SELECT gameName, startTime, endTime, Tasks FROM games WHERE unique_id='$uid'") or die(mysql_error());
-
-  $no_of_rows = mysql_num_rows($result);
-  if ($no_of_rows > 0) {
-    $result = mysql_fetch_array($result);
-    return $result;
+public function setUserData($uniqueid, $username, $about, $contact){
+  $result = mysql_query("UPDATE users SET username = '$username', About = '$about', contact ='$contact' WHERE unique_id = '$uniqueid'");
+  
+  if ($result) {
+    // get user details 
+            $uid = mysql_insert_id(); // last inserted id
+            $result = mysql_query("SELECT * FROM users WHERE uid = $uid");
+            // return user details
+            return mysql_fetch_array($result);
   }
-  else {
-  return false;
-}
+  else{
+    return false;
+  }
 }
 /**
      * Adding new user to mysql database
      * returns user details
      */
 
-    public function storeUser($fname, $lname, $email, $uname, $password) {
+    public function storeUser($fname, $lname, $email, $uname, $uzip, $password) {
         $uuid = uniqid('', true);
         $hash = $this->hashSSHA($password);
         $encrypted_password = $hash["encrypted"]; // encrypted password
         $salt = $hash["salt"]; // salt
-        $result = mysql_query("INSERT INTO users(unique_id, firstname, lastname, email, username, encrypted_password, salt, created_at) VALUES('$uuid', '$fname', '$lname', '$email', '$uname', '$encrypted_password', '$salt', NOW())");
+        $result = mysql_query("INSERT INTO users(unique_id, firstname, lastname, email, username, zipcode, encrypted_password, salt, created_at) VALUES('$uuid', '$fname', '$lname', '$email', '$uname', '$uzip', '$encrypted_password', '$salt', NOW())");
         // check for successful store
         if ($result) {
             // get user details 
@@ -247,3 +313,4 @@ public function validEmail($email)
 }
 
 ?>
+  

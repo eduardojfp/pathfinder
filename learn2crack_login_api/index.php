@@ -30,6 +30,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             $response["user"]["lname"] = $user["lastname"];
             $response["user"]["email"] = $user["email"];
       $response["user"]["uname"] = $user["username"];
+            $response["user"]["uzip"] = $user["zipcode"];
             $response["user"]["uid"] = $user["unique_id"];
             $response["user"]["created_at"] = $user["created_at"];
             
@@ -42,6 +43,107 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             echo json_encode($response);
         }
     } 
+      //get team data
+      else if ($tag == 'findTeamData') {
+        $uuid = $_POST['uuid'];
+        $gid = $_POST['gid'];
+        $user = $db->findTeamData($uuid, $gid);
+        if ($user != false) {
+        $response["success"] = 1;
+        $response["teamuser"]["teamid"] = $user["teamid"];
+        $response["teamuser"]["score"] = $user["score"];
+        $response["teamuser"]["teamname"] = $user["teamname"];
+        echo json_encode($response);
+        } else {
+            // user not found
+            // echo json with error = 1
+            $response["error"] = 1;
+            $response["error_msg"] = "No Team data";
+            echo json_encode($response);
+        }
+        
+    }
+    //get Games by uid
+      else if ($tag == 'getGamesByUid') {
+        $uuid = $_POST['uid'];
+        $user = $db->getGamesByUid($uuid);
+        if ($user != false) {
+        $response["success"] = 1;
+        $response["user"]["gid"] = $user["gid"];
+        $response["user"]["gname"] = $user["gname"];
+        echo json_encode($response);
+        } else {
+            // user not found
+            // echo json with error = 1
+            $response["error"] = 1;
+            $response["error_msg"] = "No Games found";
+            echo json_encode($response);
+        }
+        
+    }
+    //getTaskdata
+    else if ($tag == 'getTaskData') {
+        $teamid = $_POST['teamid'];
+        $gid = $_POST['gid'];
+        $user = $db->getTaskData($teamid, $gid);
+        if ($user != false) {
+        $response["success"] = 1;
+        for($i = 0; $i < count($user); $i++){
+             $array = "array" . $i;
+             $response["task"][$array] = $user[$i];
+        }
+        echo json_encode($response);
+        } else {
+            // user not found
+            // echo json with error = 1
+            $response["error"] = 1;
+            $response["error_msg"] = "No Team data";
+            echo json_encode($response);
+        }
+        
+    }
+    //using gid get game data
+    else if ($tag == 'getGameDataGid') {
+        $gid = $_POST['gid'];
+        $game = $db->getGameDataGid($gid);
+        if ($game != false) {
+        $response["success"] = 1;
+        $response["Game"]["gid"] = $game["gid"];
+        $response["Game"]["gname"] = $game["gname"];
+        $response["Game"]["location"] = $game["location"];
+        $response["Game"]["gameadmin"] = $game["gameadmin"];
+        $response["Game"]["starttime"] = $game["starttime"];
+        $response["Game"]["endtime"] = $game["endtime"];
+        $response["Game"]["done"] = $game["done"];
+        echo json_encode($response);
+       } else {
+       //no games found
+       $response["error"] = 1;
+       $response["error_msg"]="No Game Data";
+       echo json_encode($response);
+       }
+        
+    }
+    //get game data
+  else if ($tag == 'getGameData') {
+       $uzip=$_POST['uzip'];
+       $game = $db->getGameData($uzip);
+       if ($game != false) {
+       $response["success"] = 1;
+       $response["Game"]["gid"] = $game["gid"];
+       $response["Game"]["gname"] = $game["gname"];
+       $response["Game"]["gameadmin"] = $game["gameadmin"];
+       $response["Game"]["starttime"] = $game["starttime"];
+       $response["Game"]["endtime"] = $game["endtime"];
+       $response["Game"]["done"] = $game["done"];
+       echo json_encode($response);
+       } else {
+       //no games found
+       $response["error"] = 1;
+       $response["error_msg"]="No Game Data";
+       echo json_encode($response);
+       }
+    }
 
   else if ($tag == 'getUserData'){
      $uid = $_POST['uid'];
@@ -55,22 +157,27 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
        
        echo json_encode($response);     
     }
-
-  else if ($tag =='getGameData')
-    $gid = $_POST['uid'];
-    $gamedata = $db->getGameData($uid);
-    if($gamedata != false){
-      $response["success"]=1;
-      $response["game"]["gName"]=$gamedata["gameName"];
-      $response["game"]["sTime"]=$gamedata["gameName"];
-      $response["game"]["eTime"]=$gamedata["gameName"];
-    }
     else{
       $response["error"] = 1;
       $response["error_msg"] = "No uid found";
       echo json_encode($response);
     }
 
+  }
+  else if ($tag == 'joinGID'){
+    $uid = $_POST['uid'];
+    $gid = $_POST['gid'];
+
+    $game = $db->joinGID($uid, $gid);
+
+    if ($game != false) {
+     $response["success"] = 1;
+     echo json_encode($response);
+     } else {
+     $response["error"] = 1;
+     $response["error_msg"]="Something terrible happened.";
+     echo json_encode($response);
+     }
   }
   else if ($tag == 'setUserData'){
     $uniqueid = $_POST['uid'];
@@ -169,13 +276,12 @@ echo json_encode($response);
 else if ($tag == 'register') {
         // Request type is Register new user
         $fname = $_POST['fname'];
-    $lname = $_POST['lname'];
+        $lname = $_POST['lname'];
         $email = $_POST['email'];
-    $uname = $_POST['uname'];
+  $uname = $_POST['uname'];
+        $uzip = $_POST['uzip'];
         $password = $_POST['password'];
-
-
-        
+   
           $subject = "Registration";
          $message = "Hello $fname,\n\nYou have successfully registered to PathFinder.\n\nEnjoy!\nTeam PathFinder.";
           $from = "support@team-pathfinder.com";
@@ -187,15 +293,15 @@ else if ($tag == 'register') {
             $response["error"] = 2;
             $response["error_msg"] = "User already exists";
             echo json_encode($response);
-        } 
+            } 
            else if(!$db->validEmail($email)){
             $response["error"] = 3;
             $response["error_msg"] = "Invalid Email Id";
             echo json_encode($response);             
-}
-else {
+            }
+           else {
             // store user
-            $user = $db->storeUser($fname, $lname, $email, $uname, $password);
+            $user = $db->storeUser($fname, $lname, $email, $uname, $uzip, $password);
             if ($user) {
                 // user stored successfully
             $response["success"] = 1;
@@ -203,6 +309,7 @@ else {
             $response["user"]["lname"] = $user["lastname"];
             $response["user"]["email"] = $user["email"];
       $response["user"]["uname"] = $user["username"];
+            $response["user"]["uzip"] = $user["zipcode"];
             $response["user"]["uid"] = $user["unique_id"];
             $response["user"]["created_at"] = $user["created_at"];
                mail($email,$subject,$message,$headers);
@@ -224,3 +331,4 @@ else {
     echo "Login API";
 }
 ?>
+            
