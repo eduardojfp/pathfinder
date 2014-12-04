@@ -17,5 +17,19 @@
     <string name="pick_time">Pick Start Time</string>
     <string name="action_profile">View Profile</string>
     <string name="action_logout">Logout</string>
+    <string name="first">First</string>
+    <string name="second">Second</string>
+    <string name="third">Third</string>
+    <string name="fourth">Fourth</string>
+    <string name="fifth">Fifth</string>
+    <string name="enter_task">Enter a Task</string>
+    <string name="date_picker">Pick a Date</string>
+    <string name="create_game">Finalize</string>
+    <string name="zip_code">Enter your zip code</string>
+    
+    <string-array name="task_num_array">
+        <item>5</item>
+        <item>10</item>
+    </string-array>
 
 </resources>

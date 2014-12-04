@@ -126,6 +126,7 @@ public class UserFunctions {
         params.add(new BasicNameValuePair("hourStart", hourStart));
         params.add(new BasicNameValuePair("minStart", minStart));
         params.add(new BasicNameValuePair("hourEnd", hourEnd));
+        params.add(new BasicNameValuePair("minEnd", minEnd));
         */
         JSONObject json = jsonParser.getJSONFromUrl(processGameURL,params);
         return json;

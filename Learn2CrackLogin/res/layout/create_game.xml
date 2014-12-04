@@ -25,13 +25,20 @@
         android:inputType="text" />
     
     <!-- Number Field for Number of Tasks -->
-    <EditText
+    <Spinner
         android:id="@+id/task_num"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/task_num"
         android:inputType="number" />
     
+    <!-- What day is the event? -->
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/date_picker" 
+    	android:onClick="showDatePickerDialog" />
+    	
     <!-- What time is the event? -->
     <Button 
         android:layout_height="wrap_content"
@@ -47,11 +54,21 @@
         android:text="@string/time_limit_check"
         android:onClick="showEndTimePickerDialog"/>
     
+    <!-- Location box -->
+    <Editext
+        android:id="@+id/zip_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:text="@string/zip_code" >
+    </Editext>
+    
     <!-- Button to Bring User to Task Creation Screen -->
     <Button
         android:id="@+id/next_button"
         android:text="@string/next_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />"
+        android:layout_height="wrap_content"
+        android:onClick="createTasks"/>"
 
 </LinearLayout>

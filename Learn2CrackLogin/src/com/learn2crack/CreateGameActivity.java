@@ -1,9 +1,12 @@
 package com.learn2crack;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.app.Activity;
 import android.app.TimePickerDialog;
-import android.os.AsyncTask;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,37 +14,38 @@ import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.Button;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.app.DialogFragment;
 import java.util.Calendar;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.learn2crack.library.UserFunctions;
-
+import java.util.Date;
 import android.app.Dialog;
 import android.content.Intent;
 import android.widget.TimePicker;
+import android.text.Editable;
 import android.text.format.DateFormat;
 
 public class CreateGameActivity extends Activity {
 	
-	private static String KEY_SUCCESS = "success";
-	
 	// User Input Fields
 	EditText gameNameEditField;
-	EditText taskNumField;
+	EditText zipCodeField;
+	//EditText taskNumField;
+	Spinner spinner;
 	Button next;
-	TextView ErrorMsg;
 	
 	// Stored Game Parameters
 	String gameName;
 	int numTask;
+	int zipCode;
 	boolean time_limit;
 	static int hourStart;
 	static int minStart;
-	static int hourEnd;
-	static int minEnd;
+	static int hourEnd = 22;
+	static int minEnd = 58;
+	static Calendar gameDate;
+	static int gameYear;
+	static int gameMonth;
+	static int gameDay;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +57,13 @@ public class CreateGameActivity extends Activity {
 	    //textView.setTextSize(40);
 	    
 	    gameNameEditField = (EditText)findViewById(R.id.edit_message);
-		taskNumField = (EditText)findViewById(R.id.task_num);
-		ErrorMsg = (TextView) findViewById(R.id.register_error);
+	    zipCodeField = (EditText)findViewById(R.id.zip_code);
+		//taskNumField = (EditText)findViewById(R.id.task_num);
+		spinner = (Spinner)findViewById(R.id.task_num);
 		
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.task_num_array, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
 	}
 
 	@Override
@@ -109,6 +117,23 @@ public class CreateGameActivity extends Activity {
 		Intent intent = new Intent(this, Login.class);
 		startActivity(intent);
 	}
+	public void createTasks(View view) {
+		gameName = gameNameEditField.getText().toString();
+		zipCode = Integer.parseInt(zipCodeField.getText().toString());
+		Intent intent = new Intent(this, CreateTasks.class);
+		Bundle extras = new Bundle();
+		extras.putString("game_name", gameName);
+		extras.putInt("zipCode", zipCode);
+		extras.putInt("year", gameYear);
+		extras.putInt("month", gameMonth);
+		extras.putInt("day", gameDay);
+		extras.putInt("hourStart", hourStart);
+		extras.putInt("minStart", minStart);
+		extras.putInt("hourEnd", hourEnd);
+		extras.putInt("minEnd", minEnd);
+		intent.putExtras(extras);
+    	startActivity(intent);
+	}
 	
 	public void onCheckBoxClicked(View view) {
 		
@@ -152,24 +177,59 @@ public class CreateGameActivity extends Activity {
 	
 	public static class EndTimePickerFragment extends DialogFragment
 	implements TimePickerDialog.OnTimeSetListener {
-	@Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the current time as the default values for the picker
-        final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
+		@Override
+	    public Dialog onCreateDialog(Bundle savedInstanceState) {
+	        // Use the current time as the default values for the picker
+	        final Calendar c = Calendar.getInstance();
+	        int hour = c.get(Calendar.HOUR_OF_DAY);
+	        int minute = c.get(Calendar.MINUTE);
+	
+	        // Create a new instance of TimePickerDialog and return it
+	        return new TimePickerDialog(getActivity(), this, hour, minute,
+	                DateFormat.is24HourFormat(getActivity()));
+	    }
+	
+	    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+	        // Do something with the time chosen by the user
+	    	hourEnd = hourOfDay;
+	    	minEnd = minute;
+	    }    
+	}
+	
+	public static class DatePickerFragment extends DialogFragment
+    implements DatePickerDialog.OnDateSetListener {
 
-        // Create a new instance of TimePickerDialog and return it
-        return new TimePickerDialog(getActivity(), this, hour, minute,
-                DateFormat.is24HourFormat(getActivity()));
-    }
-
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        // Do something with the time chosen by the user
-    	hourEnd = hourOfDay;
-    	minEnd = minute;
-    }
-}
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+		// Use the current date as the default date in the picker
+			final Calendar c = Calendar.getInstance();
+			int year = c.get(Calendar.YEAR);
+			int month = c.get(Calendar.MONTH);
+			int day = c.get(Calendar.DAY_OF_MONTH);
+			
+			// Create a new instance of DatePickerDialog and return it
+			return new DatePickerDialog(getActivity(), this, year, month, day);
+		}
+		
+		@SuppressWarnings("deprecation")
+		public void onDateSet(DatePicker view, int year, int month, int day) {
+			// Do something with the date chosen by the user
+			int updatedMonth = month+1;
+			gameYear = year;
+			gameMonth = month;
+			gameDay = day;
+			/*gameDate = Calendar.getInstance();
+			gameDate.set(Calendar.YEAR, year);
+			gameDate.set(Calendar.MONTH, month);
+			gameDate.set(Calendar.DAY_OF_MONTH, day);
+			*/
+			//System.out.println(gameDate.getTime());
+			/*gameDate = new Date(year, updatedMonth, day);
+			System.out.println(year + ":" + updatedMonth + ":" + day);
+			System.out.println(gameDate.getYear() + ":" + gameDate.getMonth() + ":" + gameDate.getDay());
+			*/
+		}
+	}
 
 	public void showEndTimePickerDialog(View v) {
 		// Check to see if time limit box is checked
@@ -184,58 +244,11 @@ public class CreateGameActivity extends Activity {
 			}
 			else time_limit = false;
 		}
-		
-		new ProcessGame();
 	}
 	
-	 private class ProcessGame extends AsyncTask<String, String, JSONObject> {
-		         @Override
-		         protected void onPreExecute() {
-		             super.onPreExecute();
-		             /*
-		             inputUsername = (EditText) findViewById(R.id.uname);
-		             inputPassword = (EditText) findViewById(R.id.pword);
-		                fname = inputFirstName.getText().toString();
-		                lname = inputLastName.getText().toString();
-		                 email = inputEmail.getText().toString();
-		                 uname= inputUsername.getText().toString();
-		                 uzip = inputZipcode.getText().toString();
-		                 password = inputPassword.getText().toString();
-		                 */
-		         }
-
-		         @Override
-		         protected JSONObject doInBackground(String... args) {
-
-
-		         UserFunctions userFunction = new UserFunctions();
-		         JSONObject json = userFunction.processGame(gameName, numTask,
-		        		 time_limit, hourStart, minStart, hourEnd, minEnd);
-
-		             return json;
-		         }
-		        @Override
-		         protected void onPostExecute(JSONObject json) {
-		                 try {
-		                     if (json.getString(KEY_SUCCESS) != null) {
-		                         ErrorMsg.setText("");
-		                         String res = json.getString(KEY_SUCCESS);
-
-		                         if(Integer.parseInt(res) == 1){
-		                             ErrorMsg.setText("Successfully Created Game");
-////////////////////
-		                             //GO TO SUCCESS PAGE
-		                             //Intent registered = new Intent(getApplicationContext(), Registered.class);
-////////////////////////
-		                               finish();
-		                         }
-		                     }
-		                         else{
-		                             ErrorMsg.setText("There was a problem creating the game!");
-		                         }
-
-		                 } catch (JSONException e) {
-		                     e.printStackTrace();
-		                 }
-		             }}
+	public void showDatePickerDialog(View v) {
+		// User selects a Date for their event
+		DialogFragment newFragment = new DatePickerFragment();
+	    newFragment.show(getFragmentManager(), "datePicker");	
+	}
 }
