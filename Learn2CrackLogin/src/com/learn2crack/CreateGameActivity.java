@@ -3,6 +3,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.app.Activity;
 import android.app.TimePickerDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,9 +11,14 @@ import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.Button;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.app.DialogFragment;
 import java.util.Calendar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.learn2crack.library.UserFunctions;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.widget.TimePicker;
@@ -20,10 +26,13 @@ import android.text.format.DateFormat;
 
 public class CreateGameActivity extends Activity {
 	
+	private static String KEY_SUCCESS = "success";
+	
 	// User Input Fields
 	EditText gameNameEditField;
 	EditText taskNumField;
 	Button next;
+	TextView ErrorMsg;
 	
 	// Stored Game Parameters
 	String gameName;
@@ -45,6 +54,7 @@ public class CreateGameActivity extends Activity {
 	    
 	    gameNameEditField = (EditText)findViewById(R.id.edit_message);
 		taskNumField = (EditText)findViewById(R.id.task_num);
+		ErrorMsg = (TextView) findViewById(R.id.register_error);
 		
 	}
 
@@ -174,5 +184,58 @@ public class CreateGameActivity extends Activity {
 			}
 			else time_limit = false;
 		}
+		
+		new ProcessGame();
 	}
+	
+	 private class ProcessGame extends AsyncTask<String, String, JSONObject> {
+		         @Override
+		         protected void onPreExecute() {
+		             super.onPreExecute();
+		             /*
+		             inputUsername = (EditText) findViewById(R.id.uname);
+		             inputPassword = (EditText) findViewById(R.id.pword);
+		                fname = inputFirstName.getText().toString();
+		                lname = inputLastName.getText().toString();
+		                 email = inputEmail.getText().toString();
+		                 uname= inputUsername.getText().toString();
+		                 uzip = inputZipcode.getText().toString();
+		                 password = inputPassword.getText().toString();
+		                 */
+		         }
+
+		         @Override
+		         protected JSONObject doInBackground(String... args) {
+
+
+		         UserFunctions userFunction = new UserFunctions();
+		         JSONObject json = userFunction.processGame(gameName, numTask,
+		        		 time_limit, hourStart, minStart, hourEnd, minEnd);
+
+		             return json;
+		         }
+		        @Override
+		         protected void onPostExecute(JSONObject json) {
+		                 try {
+		                     if (json.getString(KEY_SUCCESS) != null) {
+		                         ErrorMsg.setText("");
+		                         String res = json.getString(KEY_SUCCESS);
+
+		                         if(Integer.parseInt(res) == 1){
+		                             ErrorMsg.setText("Successfully Created Game");
+////////////////////
+		                             //GO TO SUCCESS PAGE
+		                             //Intent registered = new Intent(getApplicationContext(), Registered.class);
+////////////////////////
+		                               finish();
+		                         }
+		                     }
+		                         else{
+		                             ErrorMsg.setText("There was a problem creating the game!");
+		                         }
+
+		                 } catch (JSONException e) {
+		                     e.printStackTrace();
+		                 }
+		             }}
 }

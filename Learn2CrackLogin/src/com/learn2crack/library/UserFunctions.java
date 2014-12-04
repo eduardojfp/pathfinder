@@ -27,6 +27,7 @@ public class UserFunctions {
     private static String chgpassURL = "http://team-pathfinder.tk/a4794025_DB/";
     private static String getGameDataURL = "http://team-pathfinder.tk/a4794025_DB/";
     private static String joinGIDURL = "http://team-pathfinder.tk/a4794025_DB/";
+    private static String processGameURL = "http://team-pathfinder.tk/a4794025_DB/";
     
     private static String getTaskData_tag = "getTaskData";
     private static String findTeamData_tag = "findTeamData";
@@ -40,6 +41,7 @@ public class UserFunctions {
     private static String getGameData_tag = "getGameData";
     private static String getGamesByUid_tag = "getGamesByUid";
     private static String joinGID_tag = "joinGID";
+    private static String createGame_tag = "createGame";
 
 
     // constructor7y
@@ -109,7 +111,26 @@ public class UserFunctions {
         JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
         return json;
     }
+    /**
+     * Function to Create a new game
+     */
     
+    public JSONObject processGame(String gameName, int numTask, boolean time_limit, int hourStart, int minStart, int hourEnd, int minEnd) {
+        // Building Parameters
+    	
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        /*
+        params.add(new BasicNameValuePair("gameName", gameName));
+        params.add(new BasicNameValuePair("numTask", numTask));
+        params.add(new BasicNameValuePair("tag", createGame_tag));
+        params.add(new BasicNameValuePair("hourStart", hourStart));
+        params.add(new BasicNameValuePair("minStart", minStart));
+        params.add(new BasicNameValuePair("hourEnd", hourEnd));
+        */
+        JSONObject json = jsonParser.getJSONFromUrl(processGameURL,params);
+        return json;
+        
+    }
     /**
      * Function to get User Data
      **/
