@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.Date;
 import java.util.HashMap;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -84,6 +85,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Inserting Row
         db.insert(TABLE_LOGIN, null, values);
         db.close(); // Closing database connection
+    }
+    
+    
+    public void addGame(String gid, String gname, String location, String admin, Date start, Date End) {
+    	
     }
 
 

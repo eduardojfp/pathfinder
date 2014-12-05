@@ -55,13 +55,13 @@
         android:onClick="showEndTimePickerDialog"/>
     
     <!-- Location box -->
-    <Editext
+    <EditText
         android:id="@+id/zip_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:text="@string/zip_code" >
-    </Editext>
+        android:hint="@string/zip_code" >
+    </EditText>
     
     <!-- Button to Bring User to Task Creation Screen -->
     <Button
@@ -69,6 +69,14 @@
         android:text="@string/next_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="createTasks"/>"
+        android:onClick="createTasks">
+    </Button>
+
+    <TextView
+        android:id="@+id/register_error"
+        android:layout_width="288dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>

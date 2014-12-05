@@ -3,6 +3,10 @@ package com.learn2crack;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.json.JSONObject;
+
+import com.learn2crack.library.UserFunctions;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,11 +32,18 @@ public class CreateTasks extends Activity {
 	String taskFifth;
 	Intent intent;
 	String gameName;
-	int zipCode;
+	String zipCode;
 	Calendar gameDate;
 	
+	String year;
+	String month;
+	String day;
+	String hourStart;
+	String minStart;
+	String hourEnd;
+	String minEnd;
+	
 	Button next;
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,25 +59,30 @@ public class CreateTasks extends Activity {
 		// Finalize button
 		next = (Button)findViewById(R.id.next_button);
 		
-		// Retriev information to be sent to the database
+		// Retrieve information to be sent to the database
 		intent = getIntent();
 		Bundle extras = intent.getExtras();
 		gameName = extras.getString("game_name");
-		zipCode = extras.getInt("zipCode");
-		int year = extras.getInt("year", 2014);
-		int month = extras.getInt("month", 12);
-		int day = extras.getInt("day", 15);
-		int hourStart = extras.getInt("hourStart");
-		int minStart = extras.getInt("minStart");
-		int hourEnd = extras.getInt("hourEnd", 23);
-		int minEnd = extras.getInt("minEnd", 59);
-		gameDate = Calendar.getInstance();
-		gameDate.set(Calendar.YEAR, year);
-		gameDate.set(Calendar.MONTH, month);
-		gameDate.set(Calendar.DAY_OF_MONTH, day);
-		System.out.println(gameDate.getTime());
-		System.out.println(hourStart + ":" + minStart);
-		System.out.println(hourEnd + ":" + minEnd);
+		zipCode = extras.getString("zipCode");
+		year = Integer.toString(extras.getInt("year", 2014));
+		month = Integer.toString(extras.getInt("month", 12));
+		day = Integer.toString(extras.getInt("day", 15));
+		hourStart = Integer.toString(extras.getInt("hourStart"));
+		minStart = Integer.toString(extras.getInt("minStart"));
+		hourEnd = Integer.toString(extras.getInt("hourEnd", 23));
+		minEnd = Integer.toString(extras.getInt("minEnd", 59));
+		
+		
+		
+		
+		//gameDate = Calendar.getInstance();
+		//gameDate.set(Calendar.YEAR, year);
+		//gameDate.set(Calendar.MONTH, month);
+		//gameDate.set(Calendar.DAY_OF_MONTH, day);
+		//Date date = gameDate.getTime();
+		//System.out.println(gameDate.getTime());
+		//System.out.println(hourStart + ":" + minStart);
+		//System.out.println(hourEnd + ":" + minEnd);
 		
 		//System.out.println(year);
 		//System.out.println(month);
@@ -133,6 +149,12 @@ public class CreateTasks extends Activity {
 		taskThird = third.getText().toString();
 		taskFourth = fourth.getText().toString();
 		taskFifth = fifth.getText().toString();	
+		
+		UserFunctions userFunction = new UserFunctions();
+		String num_task ="5";
+		userFunction.processGame(gameName, num_task, hourStart, minStart, hourEnd, minEnd, year, month, day);
 	}
+	
+	
 
 }

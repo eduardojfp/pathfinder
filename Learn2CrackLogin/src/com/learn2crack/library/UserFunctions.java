@@ -115,11 +115,13 @@ public class UserFunctions {
      * Function to Create a new game
      */
     
-    public JSONObject processGame(String gameName, int numTask, boolean time_limit, int hourStart, int minStart, int hourEnd, int minEnd) {
+    public void processGame(String gameName, String numTask, 
+    		String hourStart, String minStart, String hourEnd, String minEnd,
+    		String year, String month, String day) {
         // Building Parameters
     	
         List<NameValuePair> params = new ArrayList<NameValuePair>();
-        /*
+        
         params.add(new BasicNameValuePair("gameName", gameName));
         params.add(new BasicNameValuePair("numTask", numTask));
         params.add(new BasicNameValuePair("tag", createGame_tag));
@@ -127,9 +129,11 @@ public class UserFunctions {
         params.add(new BasicNameValuePair("minStart", minStart));
         params.add(new BasicNameValuePair("hourEnd", hourEnd));
         params.add(new BasicNameValuePair("minEnd", minEnd));
-        */
+        params.add(new BasicNameValuePair("year", year));
+        params.add(new BasicNameValuePair("month", month));
+        params.add(new BasicNameValuePair("day", day));
+        
         JSONObject json = jsonParser.getJSONFromUrl(processGameURL,params);
-        return json;
         
     }
     /**

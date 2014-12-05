@@ -32,20 +32,21 @@ public class CreateGameActivity extends Activity {
 	//EditText taskNumField;
 	Spinner spinner;
 	Button next;
+	TextView ErrorMsg;
 	
-	// Stored Game Parameters
-	String gameName;
-	int numTask;
-	int zipCode;
+	// Stored Game Parameters (with default values)
+	String gameName = "Your Game";
+	int numTask = 5;
+	int zipCode = 12180;
 	boolean time_limit;
-	static int hourStart;
-	static int minStart;
+	static int hourStart = 0;
+	static int minStart = 0;
 	static int hourEnd = 22;
 	static int minEnd = 58;
-	static Calendar gameDate;
-	static int gameYear;
-	static int gameMonth;
-	static int gameDay;
+	static Calendar gameDate = Calendar.getInstance();
+	static int gameYear = 1990;
+	static int gameMonth = 11;
+	static int gameDay = 25;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class CreateGameActivity extends Activity {
 	    zipCodeField = (EditText)findViewById(R.id.zip_code);
 		//taskNumField = (EditText)findViewById(R.id.task_num);
 		spinner = (Spinner)findViewById(R.id.task_num);
+		ErrorMsg = (TextView) findViewById(R.id.register_error);
 		
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.task_num_array, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -118,21 +120,27 @@ public class CreateGameActivity extends Activity {
 		startActivity(intent);
 	}
 	public void createTasks(View view) {
-		gameName = gameNameEditField.getText().toString();
-		zipCode = Integer.parseInt(zipCodeField.getText().toString());
-		Intent intent = new Intent(this, CreateTasks.class);
-		Bundle extras = new Bundle();
-		extras.putString("game_name", gameName);
-		extras.putInt("zipCode", zipCode);
-		extras.putInt("year", gameYear);
-		extras.putInt("month", gameMonth);
-		extras.putInt("day", gameDay);
-		extras.putInt("hourStart", hourStart);
-		extras.putInt("minStart", minStart);
-		extras.putInt("hourEnd", hourEnd);
-		extras.putInt("minEnd", minEnd);
-		intent.putExtras(extras);
-    	startActivity(intent);
+		if( ( !zipCodeField.getText().toString().equals("") )) {
+			System.out.println("Inside Create Task Starter");
+			gameName = gameNameEditField.getText().toString();
+			zipCode = Integer.parseInt(zipCodeField.getText().toString());
+			Intent intent = new Intent(this, CreateTasks.class);
+			Bundle extras = new Bundle();
+			extras.putString("game_name", gameName);
+			extras.putInt("zipCode", zipCode);
+			extras.putInt("year", gameYear);
+			extras.putInt("month", gameMonth);
+			extras.putInt("day", gameDay);
+			extras.putInt("hourStart", hourStart);
+			extras.putInt("minStart", minStart);
+			extras.putInt("hourEnd", hourEnd);
+			extras.putInt("minEnd", minEnd);
+			intent.putExtras(extras);
+			startActivity(intent);
+		}
+		else{
+			//ErrorMsg.setText("Fill in all fields!");
+		}
 	}
 	
 	public void onCheckBoxClicked(View view) {
@@ -252,3 +260,4 @@ public class CreateGameActivity extends Activity {
 	    newFragment.show(getFragmentManager(), "datePicker");	
 	}
 }
+
